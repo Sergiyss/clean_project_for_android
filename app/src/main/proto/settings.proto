@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_package = "ua.dev.webnauts.cleanproject";
+option java_multiple_files = true;
+
+message SettingsProto {
+
+  message TokenData {
+    string accessToken = 1;
+    string refreshToken = 2;
+  }
+
+  message UserData {
+    int32 id = 1;
+    string fullName = 2;
+    string email = 3;
+    string phone = 4;
+    string avatar = 5;
+    string lang = 6;
+  }
+
+  TokenData tokenData = 1;
+  UserData userData = 2;
+  string locale = 3;
+
+
+}
