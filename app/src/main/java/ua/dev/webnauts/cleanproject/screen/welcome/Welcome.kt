@@ -23,7 +23,9 @@ fun Welcome(appState: AppState,
 
     LaunchedEffect(key1 = true) {
         delay(2000)
-        appState.navController.navigate(Graph.Login.graph)
+        appState.navController.navigate(Graph.Login.graph){
+            launchSingleTop = true
+        }
     }
 
 

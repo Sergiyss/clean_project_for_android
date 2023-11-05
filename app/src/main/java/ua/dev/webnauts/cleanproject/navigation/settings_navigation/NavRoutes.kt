@@ -13,5 +13,7 @@ sealed class NavRoutes(val route : String){
     object Welcome : NavRoutes("welcome_screen")
     object Login : NavRoutes("login_screen")
     class Home(val nav : String = "{nav}") : NavRoutes("home_screen/$nav")
+    class RegisterScreen() : NavRoutes("register_screen")
+
     object Profile : NavRoutes("profile_screen")
 }

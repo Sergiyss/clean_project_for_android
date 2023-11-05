@@ -31,15 +31,15 @@ fun NavGraphBuilder.createTransitionComposableArg(
 ) {
     composable(
         route = route,
-        enterTransition = { enterTransitionHorizontally(screenWidth, AnimationTime.MEDIUM) },
-        exitTransition = { exitTransitionHorizontally(-screenWidth, AnimationTime.MEDIUM) },
-        popEnterTransition = {
-            popEnterTransitionHorizontally(
-                -screenWidth,
-                AnimationTime.MEDIUM
-            )
-        },
-        popExitTransition = { popExitTransitionHorizontally(screenWidth, AnimationTime.MEDIUM) },
+//        enterTransition = { enterTransitionHorizontally(screenWidth, AnimationTime.MEDIUM) },
+//        exitTransition = { exitTransitionHorizontally(-screenWidth, AnimationTime.MEDIUM) },
+//        popEnterTransition = {
+//            popEnterTransitionHorizontally(
+//                -screenWidth,
+//                AnimationTime.MEDIUM
+//            )
+//        },
+//        popExitTransition = { popExitTransitionHorizontally(screenWidth, AnimationTime.MEDIUM) },
 
         arguments = arguments
 

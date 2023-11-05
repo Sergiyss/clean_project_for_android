@@ -6,12 +6,24 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.currentBackStackEntryAsState
 import dagger.hilt.android.AndroidEntryPoint
 import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Navigation
 import ua.dev.webnauts.cleanproject.network.network_monitor.NetworkMonitor
@@ -32,13 +44,31 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CleanProjectTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
+                val appState  = rememberAppState(
+                    networkMonitor = networkMonitor
+                )
 
-                    Column {
+                var selectedItem by remember { mutableStateOf(0) }
+                val items = listOf("Songs", "Artists", "Profiles")
+                val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
+                println("<<<<< screen: ${currentDestination?.route}")
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar {
+                            items.forEachIndexed { index, item ->
+                                NavigationBarItem(
+                                    icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
+                                    label = { androidx.compose.material.Text(item) },
+                                    selected = selectedItem == index,
+                                    onClick = { selectedItem = index }
+                                )
+                            }
+                        }
+                    }
+                ) {
+                    Column(Modifier.padding(it)) {
 
                         /**
                          * @param startDestination - start destination for navigation

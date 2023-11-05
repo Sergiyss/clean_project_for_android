@@ -26,19 +26,19 @@ data class User(
 @Dao
 interface UserDao {
     @Insert
-    suspend fun insert(user: User)
+    fun insert(user: User)
 
     @Query("SELECT * FROM user_table WHERE userId = :userId")
-    suspend fun getUserById(userId: Long): User?
+    fun getUserById(userId: Long): User?
 
     @Query("SELECT * FROM user_table WHERE userEmail = :email")
-    suspend fun getUserByEmail(email: String): User?
+    fun getUserByEmail(email: String): User?
 
     @Query("SELECT * FROM user_table")
     fun getUserProfiles(): User?
 
     @Query("DELETE FROM user_table")
-    suspend fun deleteAllUsers()
+    fun deleteAllUsers()
 
     @Update
     fun updateUserProfile(user: User)

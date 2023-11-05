@@ -5,9 +5,6 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
-import ua.dev.webnauts.cleanproject.database.datastore.ProtoApi
-import ua.dev.webnauts.cleanproject.database.datastore.ProtoRepository
-import ua.dev.webnauts.cleanproject.database.datastore.SettingsProtoSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,26 +45,8 @@ object ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideProtoDatastore(@ApplicationContext context: Context): DataStore<SettingsProto> {
-        return DataStoreFactory.create(
-            serializer = SettingsProtoSerializer,
-            produceFile = { context.dataStoreFile("SettingsFile") },
-            corruptionHandler = null,
-            scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideProtoApi(protoRepository: ProtoRepository): ProtoApi {
-        return protoRepository
-    }
-
-    @Singleton
-    @Provides
     fun provideClient(
         @ApplicationContext context: Context,
-        protoApi: ProtoApi,
     ): HttpClient {
         return HttpClient(Android) {
 

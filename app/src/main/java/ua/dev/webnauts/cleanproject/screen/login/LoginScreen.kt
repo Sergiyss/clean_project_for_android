@@ -3,6 +3,7 @@ package ua.dev.webnauts.cleanproject.screen.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -20,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ua.dev.webnauts.cleanproject.AppState
+import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Graph
+import ua.dev.webnauts.cleanproject.navigation.settings_navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.ui.compose_ui.top_bars.DefaultTopBar
 
 @Composable
@@ -61,9 +64,21 @@ fun LoginScreen(appState: AppState,
                 TextField(value = password, onValueChange = {
                     password = it
                 })
-
-                Button(onClick = {  }) {
-                    Text(text = "Login")
+                Row(){
+                    Button(onClick = {
+                        appState.navController.navigate(Graph.Home.graph){
+                            launchSingleTop = true
+                        }
+                    }) {
+                        Text(text = "Login")
+                    }
+                    Button(onClick = {
+                        appState.navController.navigate(NavRoutes.RegisterScreen().route){
+                            launchSingleTop = true
+                        }
+                    }) {
+                        Text(text = "Register")
+                    }
                 }
 
                 Text(text = "Round corners: $roundCorners")

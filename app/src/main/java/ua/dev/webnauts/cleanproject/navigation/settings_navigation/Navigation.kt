@@ -15,6 +15,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.R
+import ua.dev.webnauts.cleanproject.navigation.homeNav
 import ua.dev.webnauts.cleanproject.navigation.loginNav
 import ua.dev.webnauts.cleanproject.navigation.welcomeNav
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
@@ -41,8 +42,6 @@ fun Navigation(appState : AppState, startDestination : String, token : String, l
         }
     }
 
-
-
     AnimatedNavHost(
         navController = appState.navController,
         startDestination = Graph.Welcome.graph,
@@ -55,6 +54,9 @@ fun Navigation(appState : AppState, startDestination : String, token : String, l
         loginNav(
             appState = appState,
             loginViewModel = loginViewModel
+        )
+        homeNav(
+            appState = appState,
         )
     }
 

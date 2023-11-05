@@ -33,7 +33,6 @@ class DatabaseModule {
 
         val appNameBD = context.getString(R.string.app_name).lowercase().replace(" ", "_")
 
-        println("???? >>>> ${appNameBD} ")
 
         return Room.databaseBuilder(
             context.applicationContext,

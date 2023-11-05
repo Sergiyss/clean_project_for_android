@@ -19,7 +19,6 @@ fun NavGraphBuilder.welcomeNav(appState: AppState, loginViewModel: LoginViewMode
         composable(
             route = NavRoutes.Welcome.route,
         ){
-
             Welcome(appState = appState, loginViewModel)
         }
     }
