@@ -35,18 +35,7 @@ fun HomeScreen(appState: AppState,
     val items = listOf("Songs", "Artists", "Profiles")
 
     Scaffold(
-       bottomBar = {
-           NavigationBar {
-               items.forEachIndexed { index, item ->
-                   NavigationBarItem(
-                       icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
-                       label = { Text(item) },
-                       selected = selectedItem == index,
-                       onClick = { selectedItem = index }
-                   )
-               }
-           }
-       }
+
     ) {
         Column(Modifier.padding(it)) {
             ProductCard()

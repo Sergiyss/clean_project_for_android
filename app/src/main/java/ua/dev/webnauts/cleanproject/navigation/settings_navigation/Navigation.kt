@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+import androidx.navigation.compose.NavHost
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.R
 import ua.dev.webnauts.cleanproject.navigation.homeNav
@@ -42,7 +42,7 @@ fun Navigation(appState : AppState, startDestination : String, token : String, l
         }
     }
 
-    AnimatedNavHost(
+    NavHost(
         navController = appState.navController,
         startDestination = Graph.Welcome.graph,
         route = NavRoutes.Welcome.route

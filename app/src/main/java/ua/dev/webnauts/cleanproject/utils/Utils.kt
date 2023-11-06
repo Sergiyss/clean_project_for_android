@@ -5,13 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 import ua.dev.webnauts.cleanproject.AppState
-import ua.dev.webnauts.cleanproject.utils.animation.navanimation.AnimationTime
-import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransitionHorizontally
-import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
-import ua.dev.webnauts.cleanproject.utils.animation.navanimation.popEnterTransitionHorizontally
-import ua.dev.webnauts.cleanproject.utils.animation.navanimation.popExitTransitionHorizontally
 
 fun String.ukToUaOrDefault(): String {
     return if (this == "uk") "ua" else this
