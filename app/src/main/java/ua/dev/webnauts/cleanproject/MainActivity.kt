@@ -56,14 +56,21 @@ class MainActivity : ComponentActivity() {
                 println("<<<<< screen: ${currentDestination?.route}")
                 Scaffold(
                     bottomBar = {
-                        NavigationBar {
-                            items.forEachIndexed { index, item ->
-                                NavigationBarItem(
-                                    icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
-                                    label = { androidx.compose.material.Text(item) },
-                                    selected = selectedItem == index,
-                                    onClick = { selectedItem = index }
-                                )
+                        if(false) {
+                            NavigationBar {
+                                items.forEachIndexed { index, item ->
+                                    NavigationBarItem(
+                                        icon = {
+                                            Icon(
+                                                Icons.Filled.Favorite,
+                                                contentDescription = item
+                                            )
+                                        },
+                                        label = { androidx.compose.material.Text(item) },
+                                        selected = selectedItem == index,
+                                        onClick = { selectedItem = index }
+                                    )
+                                }
                             }
                         }
                     }

@@ -9,6 +9,7 @@ import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Graph
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 import ua.dev.webnauts.cleanproject.screen.welcome.Welcome
+import ua.dev.webnauts.cleanproject.utils.createTransitionComposableArg
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.welcomeNav(appState: AppState, loginViewModel: LoginViewModel) {
@@ -16,7 +17,7 @@ fun NavGraphBuilder.welcomeNav(appState: AppState, loginViewModel: LoginViewMode
         route = Graph.Welcome.graph,
         startDestination = NavRoutes.Welcome.route
     ) {
-        composable(
+        createTransitionComposableArg(
             route = NavRoutes.Welcome.route,
         ){
             Welcome(appState = appState, loginViewModel)

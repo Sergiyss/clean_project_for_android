@@ -11,6 +11,7 @@ import ua.dev.webnauts.cleanproject.screen.login.LoginScreen
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 import ua.dev.webnauts.cleanproject.screen.login.RegistrationScreen
 import ua.dev.webnauts.cleanproject.screen.welcome.Welcome
+import ua.dev.webnauts.cleanproject.utils.createTransitionComposableArg
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.loginNav(appState: AppState, loginViewModel: LoginViewModel) {
@@ -18,14 +19,14 @@ fun NavGraphBuilder.loginNav(appState: AppState, loginViewModel: LoginViewModel)
         route = Graph.Login.graph,
         startDestination = NavRoutes.Login.route
     ) {
-        composable(
+        createTransitionComposableArg(
             route = NavRoutes.Login.route,
         ){
 
             LoginScreen(appState = appState, loginViewModel)
         }
 
-        composable(
+        createTransitionComposableArg(
             route = NavRoutes.RegisterScreen().route,
         ){
 

@@ -1,6 +1,8 @@
 package ua.dev.webnauts.cleanproject.utils
 
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
@@ -18,24 +20,24 @@ fun String.uaToUkOrDefault(): String {
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.createTransitionComposableArg(
-    mainState: AppState,
-    screenWidth: Int,
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
     composable(
         route = route,
-//        enterTransition = { enterTransitionHorizontally(screenWidth, AnimationTime.MEDIUM) },
-//        exitTransition = { exitTransitionHorizontally(-screenWidth, AnimationTime.MEDIUM) },
-//        popEnterTransition = {
-//            popEnterTransitionHorizontally(
-//                -screenWidth,
-//                AnimationTime.MEDIUM
-//            )
-//        },
-//        popExitTransition = { popExitTransitionHorizontally(screenWidth, AnimationTime.MEDIUM) },
-
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(700)
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(700)
+            )
+        },
         arguments = arguments
 
     ) {

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS DataBaseApp (
+id INTEGER PRIMARY KEY,
+settingsApp TEXT NOT NULL,
+number TEXT NOT NULL );
+
+insertDataBaseApp:
+INSERT OR REPLACE INTO DataBaseApp VALUES(?, ?, ?);
+
+allDataBaseApp:
+SELECT * FROM DataBaseApp;

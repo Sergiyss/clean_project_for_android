@@ -6,6 +6,7 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id "org.jetbrains.kotlin.kapt"
+    id "app.cash.sqldelight"
 }
 
 android {
@@ -70,6 +71,7 @@ dependencies {
     //noinspection GradleDependency
     implementation "androidx.compose.material:material:$compose_ui_version"
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
+    implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -184,6 +186,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
+
     //Библиотека для кэширования всего всего
     //https://github.com/square/okio
     //implementation("com.squareup.okio:okio:3.4.0")
@@ -203,6 +206,21 @@ dependencies {
     //implementation 'androidx.media3:media3-exoplayer:1.2.0-alpha01'
     //implementation "androidx.media3:media3-ui:1.2.0-alpha01"
 
+
+    //sqldelight
+    implementation("app.cash.sqldelight:android-driver:2.0.0")
+    implementation("app.cash.sqldelight:coroutines-extensions-jvm:2.0.0")
+
+}
+
+
+sqldelight {
+    databases {
+        create("Database") {
+            //Указать норм имя пакета
+            packageName.set("ua.dev.webnauts.sqldelightsetup.db")
+        }
+    }
 }
 
 protobuf {
