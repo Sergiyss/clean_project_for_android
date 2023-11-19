@@ -10,25 +10,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.R
 import ua.dev.webnauts.cleanproject.navigation.homeNav
 import ua.dev.webnauts.cleanproject.navigation.loginNav
+import ua.dev.webnauts.cleanproject.navigation.profileNav
 import ua.dev.webnauts.cleanproject.navigation.welcomeNav
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun Navigation(appState : AppState, startDestination : String, token : String, loginViewModel: LoginViewModel) {
+fun NavigationProfile(appState : AppState, startDestination : String, token : String, loginViewModel: LoginViewModel) {
 
-    val localDensity = LocalDensity.current
-    val configuration = LocalConfiguration.current
+
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
-    val width = with(localDensity) { configuration.screenWidthDp.dp.toPx().toInt() }
 
     // If user is not connected to the internet show a snack bar to inform them.
     val notConnectedMessage = stringResource(R.string.not_connected)
@@ -44,18 +42,10 @@ fun Navigation(appState : AppState, startDestination : String, token : String, l
 
     NavHost(
         navController = appState.navController,
-        startDestination = Graph.Welcome.graph,
-        route = NavRoutes.Welcome.route
+        startDestination = Graph.Home.graph,
+        route = NavRoutes.Home().route
     ) {
-        welcomeNav(
-            appState = appState,
-            loginViewModel = loginViewModel
-        )
-        loginNav(
-            appState = appState,
-            loginViewModel = loginViewModel
-        )
-        homeNav(
+        profileNav(
             appState = appState,
         )
     }

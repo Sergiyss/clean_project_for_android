@@ -1,8 +1,14 @@
-CREATE TABLE IF NOT EXISTS User ( id INTEGER PRIMARY KEY, username TEXT NOT NULL, email TEXT NOT NULL );
+CREATE TABLE IF NOT EXISTS UserDataBase (
+    id INTEGER PRIMARY KEY,
+    userid TEXT NOT NULL,
+    usersData TEXT NOT NULL );
 
 
 insertUser:
-INSERT OR REPLACE INTO User VALUES(?, ?, ?);
+INSERT OR REPLACE INTO UserDataBase VALUES(?, ?, ?);
 
 allUsers:
-SELECT * FROM User;
+SELECT * FROM UserDataBase;
+
+deleteUser:
+DELETE FROM UserDataBase WHERE userid = ?;

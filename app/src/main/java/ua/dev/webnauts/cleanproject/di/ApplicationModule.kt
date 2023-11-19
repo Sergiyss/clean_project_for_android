@@ -33,6 +33,7 @@ import io.ktor.client.plugins.cache.storage.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.*
+import ua.dev.webnauts.cleanproject.App
 import ua.dev.webnauts.cleanproject.SettingsProto
 import ua.dev.webnauts.cleanproject.network.ktor.ServiceApi
 import ua.dev.webnauts.cleanproject.network.ktor.ServiceApiImpl
@@ -79,5 +80,13 @@ object ApplicationModule {
     @Singleton
     @Provides
     fun provideContext(application: Application): Context = application.applicationContext
+
+    @Provides
+    @Singleton
+    fun provideApplication(
+        @ApplicationContext context : Context
+    ): App {
+        return context as App
+    }
 
 }

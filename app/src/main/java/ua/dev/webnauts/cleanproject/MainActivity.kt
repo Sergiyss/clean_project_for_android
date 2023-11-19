@@ -24,9 +24,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ua.dev.webnauts.cleanproject.navigation.settings_navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Navigation
 import ua.dev.webnauts.cleanproject.network.network_monitor.NetworkMonitor
+import ua.dev.webnauts.cleanproject.screen.home.components.navigationData
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 import ua.dev.webnauts.cleanproject.ui.theme.CleanProjectTheme
 import javax.inject.Inject
@@ -44,31 +47,37 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CleanProjectTheme {
-                val appState  = rememberAppState(
-                    networkMonitor = networkMonitor
-                )
-
+                val appState  = rememberAppState(networkMonitor = networkMonitor,)
                 var selectedItem by remember { mutableStateOf(0) }
-                val items = listOf("Songs", "Artists", "Profiles")
-                val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
+
+
+                appState.showSnackBar("hi", duration = androidx.compose.material.SnackbarDuration.Short)
+
+
+                val currentDestination =  appState.currentDestination
+
 
                 println("<<<<< screen: ${currentDestination?.route}")
                 Scaffold(
                     bottomBar = {
-                        if(false) {
+                        if (currentDestination?.route != NavRoutes.Welcome.route &&
+                            currentDestination?.route != NavRoutes.Login.route &&
+                            currentDestination?.route != NavRoutes.RegisterScreen().route) {
                             NavigationBar {
-                                items.forEachIndexed { index, item ->
+                                navigationData.forEachIndexed { index, item ->
                                     NavigationBarItem(
                                         icon = {
-                                            Icon(
-                                                Icons.Filled.Favorite,
-                                                contentDescription = item
+                                            androidx.compose.material3.Icon(
+                                                imageVector = item.icon,
+                                                contentDescription = item.title,
                                             )
                                         },
-                                        label = { androidx.compose.material.Text(item) },
+                                        label = { androidx.compose.material.Text(item.title) },
                                         selected = selectedItem == index,
-                                        onClick = { selectedItem = index }
+                                        onClick = {
+                                            selectedItem = index
+                                            appState.navigateToTopLevelDestination(item.route)
+                                        }
                                     )
                                 }
                             }
@@ -82,30 +91,13 @@ class MainActivity : ComponentActivity() {
                          * @param token - token for user
                          * */
                         Navigation(
-                            appState = rememberAppState(
-                                networkMonitor = networkMonitor
-                            ), startDestination = "", token = "", loginViewModel
+                            appState = appState,
+                            loginViewModel
                         )
 
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CleanProjectTheme {
-        Greeting("Android")
     }
 }

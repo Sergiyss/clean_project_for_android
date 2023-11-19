@@ -2,11 +2,6 @@ package ua.dev.webnauts.cleanproject.screen.home
 
 
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -16,10 +11,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
-import androidx.compose.material3.Surface
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,20 +34,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.R
+import ua.dev.webnauts.cleanproject.navigation.settings_navigation.NavRoutes
+import ua.dev.webnauts.cleanproject.screen.home.components.navigationData
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 
 @Composable
-fun HomeScreen(appState: AppState,
-            viewModel : LoginViewModel = hiltViewModel()
+fun HomeScreen(
+    appState: AppState,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     var animated by remember { mutableStateOf(false) }
     val rotation = remember { Animatable(initialValue = 0f) }
     val scale = remember { Animatable(initialValue = 1f) }
+    var selectedItem by remember { mutableStateOf(0) }
+    val items = listOf("Songs", "Artists", "Profiles")
+
+    val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
     LaunchedEffect(animated) {
-       // if(animated == false ) return@LaunchedEffect
+        // if(animated == false ) return@LaunchedEffect
         rotation.animateTo(
             targetValue = if (animated) 180f else 0f,
             animationSpec = tween(durationMillis = 1000),
@@ -60,45 +68,21 @@ fun HomeScreen(appState: AppState,
         )
     }
 
-    Surface(modifier = Modifier.fillMaxSize(),
-        color = Color(0xFFE5E5E5)
-    ) {
+    println("<<<<< screen: 3-> ${currentDestination?.route}")
+
+    Scaffold(modifier = Modifier.fillMaxSize()) {
         Column(
+            modifier = Modifier.padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "Home Screen")
 
-            Box(modifier = Modifier
-                .graphicsLayer(
-                    rotationY = rotation.value,
-                )
-                .clickable {
-                    animated = !animated
+            LazyColumn(content = {
+                items(100) {
+                    Text(text = "Item $it", Modifier.padding(10.dp))
                 }
-                .height(150.dp)
-                .width(150.dp)
-                .border(1.dp, Color.Black)) {
-                if(rotation.value < 150f) {
-                    Image(
-                        modifier = Modifier
-                            .graphicsLayer(
-                                scaleX = scale.value,
-                                scaleY = scale.value,
-                            )
-                            .size(150.dp),
-                        contentScale = ContentScale.Crop,
-                        painter = painterResource(id = R.drawable.test_image),
-                        contentDescription = "")
-                }else{
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "12 + ${rotation.value}",
-                        fontSize = 14.sp
-                    )
-                }
-
-            }
+            })
         }
     }
 

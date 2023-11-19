@@ -7,6 +7,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,12 +22,23 @@ fun Welcome(appState: AppState,
             viewModel : LoginViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(key1 = true) {
-        delay(2000)
-        appState.navController.navigate(Graph.Login.graph){
-            launchSingleTop = true
+    val isLogin by viewModel.isLogin
+
+    LaunchedEffect(key1 = isLogin, block = {
+        if(isLogin == null){
+            viewModel.checkUser()
+            return@LaunchedEffect
         }
-    }
+        delay(1000)
+        if(isLogin == true) {
+            appState.navigateToTopLevelDestination(Graph.Home)
+        }else{
+            appState.navController.navigate(Graph.Login.graph) {
+                launchSingleTop = true
+            }
+        }
+    })
+
 
 
     Box(

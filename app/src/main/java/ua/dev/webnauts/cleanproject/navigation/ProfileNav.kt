@@ -12,23 +12,21 @@ import ua.dev.webnauts.cleanproject.navigation.settings_navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Graph
 import ua.dev.webnauts.cleanproject.screen.home.HomeScreen
+import ua.dev.webnauts.cleanproject.screen.profile.ProfileScreen
 import ua.dev.webnauts.cleanproject.utils.createTransitionComposableArg
 
-
-
-fun NavController.navigateToHome(navOptions: NavOptions? = null) {
-    this.navigate(Graph.Home.graph, navOptions)
+fun NavController.navigateToProfile(navOptions: NavOptions? = null) {
+    this.navigate(Graph.Profile.graph, navOptions)
 }
-
-fun NavGraphBuilder.homeNav(appState: AppState) {
+fun NavGraphBuilder.profileNav(appState: AppState) {
     navigation(
-        route = Graph.Home.graph,
-        startDestination = NavRoutes.Home().route
+        route = Graph.Profile.graph,
+        startDestination = NavRoutes.Profile.route
     ) {
         createTransitionComposableArg(
-            route = NavRoutes.Home().route,
+            route = NavRoutes.Profile.route,
         ){
-            HomeScreen(appState = appState)
+            ProfileScreen(appState = appState)
         }
     }
 }

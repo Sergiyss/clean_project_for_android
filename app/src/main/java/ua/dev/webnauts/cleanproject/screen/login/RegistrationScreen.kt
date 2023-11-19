@@ -4,8 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -20,7 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ua.dev.webnauts.cleanproject.AppState
+import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Graph
+import ua.dev.webnauts.cleanproject.ui.compose_components.Button.AppButton
+import ua.dev.webnauts.cleanproject.ui.compose_components.TextField.TextFieldWithTitle
 import ua.dev.webnauts.cleanproject.ui.compose_ui.top_bars.DefaultTopBar
+import ua.dev.webnauts.cleanproject.ui.theme.spacing
 
 @Composable
 fun RegistrationScreen(appState: AppState, viewModel: LoginViewModel = hiltViewModel()) {
@@ -40,57 +48,73 @@ fun RegistrationScreen(appState: AppState, viewModel: LoginViewModel = hiltViewM
             )
         }) {
         Box(
-            modifier = Modifier.fillMaxSize(1f),
+            modifier = Modifier.fillMaxSize(1f).verticalScroll(rememberScrollState()),
             contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier = Modifier
                     .padding(paddingValues = it)
-                    .align(Alignment.Center),
+                    .padding(horizontal = MaterialTheme.spacing.medium)
+                    .align(Alignment.Center)
+                    .imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(25.dp, Alignment.Top),
             ) {
-            Text(text = "Registration Screen")
                 Column {
-                    Text(text = "First Name")
-                    TextField(value = firstName, onValueChange = {
-                        firstName = it
-                    })
+                    TextFieldWithTitle(
+                        title = "First Name",
+                        value = firstName,
+                        onValueChange = {
+                            firstName = it
+                        }
+                    )
                 }
                 Column {
-                    Text(text = "Last Name")
-                    TextField(value = lastName, onValueChange = {
-                        lastName = it
-                    })
+                    TextFieldWithTitle(
+                        title = "Last Name",
+                        value = lastName,
+                        onValueChange = {
+                            lastName = it
+                        }
+                    )
                 }
                 Column {
-                    Text(text = "Phone Number")
-                    TextField(value = phoneNumber, onValueChange = {
-                        phoneNumber = it
-                    })
+                    TextFieldWithTitle(
+                        title = "Email",
+                        value = email,
+                        onValueChange = {
+                            email = it
+                        }
+                    )
                 }
                 Column {
-                    Text(text = "Email")
-                    TextField(value = email, onValueChange = {
-                        email = it
-                    })
+                    TextFieldWithTitle(
+                        title = "Password",
+                        value = password,
+                        onValueChange = {
+                            password = it
+                        }
+                    )
                 }
                 Column {
-                    Text(text = "Password")
-                    TextField(value = password, onValueChange = {
-                        password = it
-                    })
-                }
-                Column {
+                    TextFieldWithTitle(
+                        title = "Confirm Password",
+                        value = confirmPassword,
+                        onValueChange = {
+                            confirmPassword = it
+                        }
+                    )
 
-                    Text(text = "Confirm Password")
-                    TextField(value = confirmPassword, onValueChange = {
-                        confirmPassword = it
-                    })
                 }
 
-                Button(onClick = {  }) {
-                    Text(text = "Register")
+                AppButton(text = "Register") {
+                    viewModel.registerUser(
+                        email = email,
+                        firsName = firstName,
+                        lastName = lastName
+                    ){
+                        appState.navigateToTopLevelDestination(Graph.Home)
+                    }
                 }
             }
         }
