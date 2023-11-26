@@ -5,7 +5,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.ui.graphics.vector.ImageVector
-import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Graph
+import ua.dev.webnauts.cleanproject.navigation.Graph
 
 data class NavigationData(
     val title : String,
@@ -22,7 +22,7 @@ val navigationData = listOf(
     NavigationData(
         title = "Articles",
         icon = Icons.Filled.Favorite,
-        route = Graph.Home
+        route = Graph.TabTwo
     ),
 
     NavigationData(

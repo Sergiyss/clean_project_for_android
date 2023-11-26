@@ -4,6 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import ua.dev.webnauts.cleanproject.database.UserDatabaseManagement
 import ua.dev.webnauts.cleanproject.database.UserProfile
 import ua.dev.webnauts.sqldelightsetup.db.Database
@@ -12,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     val dataBase : Database,
-    private val userDatabaseManagement : UserDatabaseManagement
+    private val userDatabaseManagement : UserDatabaseManagement,
+
 ) : ViewModel(){
 
     private val _isLogin = mutableStateOf<Boolean?>(null)
@@ -24,6 +27,10 @@ class LoginViewModel @Inject constructor(
     fun setRoundCorners(i: Int) {
         _saveCount.value = i
     }
+
+
+    suspend fun getUseFlow() =
+        userDatabaseManagement.getUserFlow()
 
     /***
      * Функция для проверки авторизации пользователя

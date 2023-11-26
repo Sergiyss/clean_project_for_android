@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ua.dev.webnauts.cleanproject.AppState
-import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Graph
-import ua.dev.webnauts.cleanproject.navigation.settings_navigation.NavRoutes
+import ua.dev.webnauts.cleanproject.navigation.Graph
+import ua.dev.webnauts.cleanproject.navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.ui.compose_ui.top_bars.DefaultTopBar
 
 @Composable

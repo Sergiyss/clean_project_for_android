@@ -26,18 +26,18 @@ fun NavGraphBuilder.createTransitionComposableArg(
 ) {
     composable(
         route = route,
-//        enterTransition = {
-//            slideIntoContainer(
-//                AnimatedContentTransitionScope.SlideDirection.Left,
-//                animationSpec = tween(700)
-//            )
-//        },
-//        exitTransition = {
-//            slideOutOfContainer(
-//                AnimatedContentTransitionScope.SlideDirection.Right,
-//                animationSpec = tween(700)
-//            )
-//        },
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(700)
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(700)
+            )
+        },
         arguments = arguments
 
     ) {

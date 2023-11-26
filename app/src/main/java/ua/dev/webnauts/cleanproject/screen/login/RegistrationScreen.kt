@@ -8,11 +8,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,9 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import ua.dev.webnauts.cleanproject.AppState
-import ua.dev.webnauts.cleanproject.navigation.settings_navigation.Graph
+import ua.dev.webnauts.cleanproject.navigation.Graph
 import ua.dev.webnauts.cleanproject.ui.compose_components.Button.AppButton
 import ua.dev.webnauts.cleanproject.ui.compose_components.TextField.TextFieldWithTitle
 import ua.dev.webnauts.cleanproject.ui.compose_ui.top_bars.DefaultTopBar
