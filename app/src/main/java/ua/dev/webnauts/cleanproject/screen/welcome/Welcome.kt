@@ -16,8 +16,9 @@ import ua.dev.webnauts.cleanproject.navigation.Graph
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 
 @Composable
-fun Welcome(appState: AppState,
-            viewModel : LoginViewModel = hiltViewModel()
+fun Welcome(
+    viewModel : LoginViewModel = hiltViewModel(),
+    route:(String)-> Unit,
 ) {
 
     val isLogin by viewModel.isLogin
@@ -29,11 +30,13 @@ fun Welcome(appState: AppState,
         }
         delay(1000)
         if(isLogin == true) {
-            appState.navigateToTopLevelDestination(Graph.Home)
+            println(">>>>>>>>>> 111 ")
+            route(Graph.Home.graph)
+
         }else{
-            appState.navController.navigate(Graph.Login.graph) {
-                launchSingleTop = true
-            }
+            println(">>>>>>>>>> 222 ")
+            route(Graph.Login.graph)
+
         }
     })
 
@@ -48,11 +51,7 @@ fun Welcome(appState: AppState,
             viewModel.setRoundCorners(23)
 
             Text(text = "Welcome Screen")
-//            Button(onClick = {
-//                appState.navController.navigate(Graph.Login.graph)
-//            }) {
-//                Text(text = "Go to Registration")
-//            }
+
         }
     }
 }

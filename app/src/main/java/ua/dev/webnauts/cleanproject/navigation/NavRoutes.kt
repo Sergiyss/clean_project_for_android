@@ -3,7 +3,6 @@ package ua.dev.webnauts.cleanproject.navigation
 
 enum class Graph(val graph : String){
     Root("root_graph"),
-    Welcome("welcome_graph"),
     Login("login_graph"),
     Home("home_graph"),
     Profile("profile_graph"),

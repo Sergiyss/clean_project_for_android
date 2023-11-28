@@ -1,6 +1,5 @@
 package ua.dev.webnauts.cleanproject.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -16,14 +15,15 @@ import ua.dev.webnauts.cleanproject.navigation.navs.homeNav
 import ua.dev.webnauts.cleanproject.navigation.navs.loginNav
 import ua.dev.webnauts.cleanproject.navigation.navs.profileNav
 import ua.dev.webnauts.cleanproject.navigation.navs.tabNav
-import ua.dev.webnauts.cleanproject.navigation.navs.welcomeNav
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 
-@OptIn(ExperimentalAnimationApi::class)
+
 @Composable
-fun Navigation(appState : AppState, loginViewModel: LoginViewModel) {
-
-
+fun Navigation(
+    appState: AppState,
+    loginViewModel: LoginViewModel,
+    startDestination: String
+) {
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -41,13 +41,10 @@ fun Navigation(appState : AppState, loginViewModel: LoginViewModel) {
 
     NavHost(
         navController = appState.navController,
-        startDestination = Graph.Welcome.graph,
-        route = NavRoutes.Welcome.route
+        route = Graph.Root.graph,
+        startDestination = startDestination
     ) {
-        welcomeNav(
-            appState = appState,
-            loginViewModel = loginViewModel
-        )
+
         loginNav(
             appState = appState,
             loginViewModel = loginViewModel
@@ -59,7 +56,7 @@ fun Navigation(appState : AppState, loginViewModel: LoginViewModel) {
             appState = appState,
         )
 
-        tabNav(appState = appState,)
+        tabNav(appState = appState)
     }
 
 }

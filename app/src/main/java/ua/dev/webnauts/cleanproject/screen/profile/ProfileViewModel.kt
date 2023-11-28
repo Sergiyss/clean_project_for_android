@@ -23,14 +23,13 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
    private val _getUser = mutableStateOf<UserProfile?>(null)
-       val getUser: State<UserProfile?> get() = _getUser
+        val getUser: State<UserProfile?> get() = _getUser
 
     fun getUserData() {
         CoroutineScope(Dispatchers.IO).launch {
             _getUser.value = userDatabaseManagement.getUser()
         }
     }
-
 
     fun exitUser(userId : String, success: () -> Unit){
         userDatabaseManagement.deleteUser(userId)
