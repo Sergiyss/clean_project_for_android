@@ -69,7 +69,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = test)
+            //Text(text = test)
 
 
             Button(onClick = {
