@@ -60,7 +60,6 @@ fun HomeScreen(
         }
     })
 
-
     println("<<<<< screen: 3-> ${currentDestination?.route}")
 
     Scaffold(modifier = Modifier.fillMaxSize()) {
