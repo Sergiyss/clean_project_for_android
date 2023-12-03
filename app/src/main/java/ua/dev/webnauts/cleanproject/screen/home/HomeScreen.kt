@@ -69,8 +69,6 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            //Text(text = test)
-
 
             Button(onClick = {
                 viewModel.dataBase.databaseQueries.insertUser(
