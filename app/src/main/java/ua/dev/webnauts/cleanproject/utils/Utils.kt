@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ua.dev.webnauts.cleanproject.AppState
@@ -18,7 +19,22 @@ fun String.uaToUkOrDefault(): String {
     return if (this == "ua") "uk" else this
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+/**
+ * Переход по навигации со следующем очищением стека
+ * */
+fun NavController.navigateAndClean(route: String) {
+    navigate(route = route) {
+        popUpTo(graph.startDestinationId) {
+            inclusive = true
+        }
+    }
+}
+/**
+ * Переход по навигации, уже включен в себя [launchSingleTop] true
+ * */
+fun NavController.navigateSingleTopTo(route: String) =
+    this.navigate(route) { launchSingleTop = true }
+
 fun NavGraphBuilder.createTransitionComposableArg(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
