@@ -38,6 +38,13 @@ val routesWithoutBottomBar = listOf(
 )
 
 
+sealed class UiState<out T> {
+    object Loading : UiState<Nothing>()
+    data class Error<T>(val data: T) : UiState<T>()
+    data class Content<T>(val data: T) : UiState<T>()
+    // Добавьте другие состояния по необходимости
+}
+
 @Stable
 data class AppState(
     val scaffoldState: ScaffoldState,
@@ -51,8 +58,6 @@ data class AppState(
     fun showSnackBar(message: String, duration: SnackbarDuration = SnackbarDuration.Short) {
 
     }
-
-
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
