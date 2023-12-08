@@ -15,9 +15,7 @@ import androidx.core.app.NotificationManagerCompat
 import ua.dev.webnauts.cleanproject.App
 import ua.dev.webnauts.cleanproject.MainActivity
 import ua.dev.webnauts.cleanproject.R
-import ua.rk.Application
-import ua.rk.MainActivity
-import ua.rk.R
+
 
 private var notificationId = 101
 
