@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleOwner
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.navigation.NavRoutes
+import ua.dev.webnauts.cleanproject.network.ktor.NetworkResponse
 import ua.dev.webnauts.cleanproject.state.collectUiState
 import ua.dev.webnauts.cleanproject.state.collectWithLifecycle
 import ua.dev.webnauts.cleanproject.ui.compose_ui.top_bars.DefaultTopBar
@@ -35,12 +36,15 @@ fun TabsTwoScreen(
     tabsTwoViewModel: TabsTwoViewModel = hiltViewModel(),
     lifecycle: LifecycleOwner = LocalLifecycleOwner.current
 ) {
-    var tst  by remember { mutableStateOf( "" ) }
+    var tst by remember { mutableStateOf("") }
     val uiState by tabsTwoViewModel.collectWithLifecycle()
     val emailCharacterCount by tabsTwoViewModel.emailCharacterCountFlow.collectAsState(initial = 0)
 
+    var uiTestState by tabsTwoViewModel.testUiState
+
     LaunchedEffect(key1 = Unit, block = {
         ///tabsTwoViewModel.flowTest()
+        tabsTwoViewModel.testUpdateUiState()
     })
 
     LaunchedEffect(key1 = Unit) {
@@ -52,8 +56,6 @@ fun TabsTwoScreen(
             }
         }
     }
-
-
     Scaffold(
         topBar = {
             DefaultTopBar(
@@ -67,13 +69,37 @@ fun TabsTwoScreen(
                 .padding(horizontal = MaterialTheme.spacing.medium)
         ) {
 
+            when (val response = uiTestState) {
+                is NetworkResponse.Success -> {
+                    Text(response.data.test)
+                    Button(onClick = { tabsTwoViewModel.testUpdateUiState(34) }) {
+                        Text("OK-+")
+                    }
+                }
+
+                is NetworkResponse.Error -> {
+                    Column {
+
+                        Text(response.message)
+
+                        Button(onClick = { uiTestState = null }) {
+                            Text("OK-+")
+                        }
+                    }
+                }
+
+                else -> {
+                    //Error
+                }
+            }
+
             // Здесь вы можете использовать emailCharacterCount в UI вашего Compose-экрана
             // Например:
             Text("Character count: $emailCharacterCount")
-            if(uiState.isLoading) {
+            if (uiState.isLoading) {
                 CircularProgressIndicator(strokeWidth = 20.dp)
             }
-            if(uiState.error) {
+            if (uiState.error) {
                 Text(
                     modifier = Modifier.padding(top = 24.dp),
                     text = uiState.errorMessage
@@ -99,9 +125,11 @@ fun TabsTwoScreen(
                 onValueChange = tabsTwoViewModel::onPasswordChange,
                 enabled = uiState.isLoading.not(),
             )
-            
-            Button(onClick = tabsTwoViewModel::onLoginClick,) {
-                Text("Login")            }
+
+
+            Button(onClick = tabsTwoViewModel::onLoginClick) {
+                Text("Login")
+            }
         }
     }
 }
