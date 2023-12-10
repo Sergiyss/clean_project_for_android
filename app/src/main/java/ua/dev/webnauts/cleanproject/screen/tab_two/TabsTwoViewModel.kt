@@ -1,9 +1,7 @@
 package ua.dev.webnauts.cleanproject.screen.tab_two
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.common.api.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -20,22 +18,16 @@ import kotlinx.coroutines.launch
 import ua.dev.webnauts.cleanproject.database.User
 import ua.dev.webnauts.cleanproject.database.UserDatabaseManagement
 import ua.dev.webnauts.cleanproject.database.UserProfile
-import ua.dev.webnauts.cleanproject.network.ktor.NetworkResponse
 import ua.dev.webnauts.cleanproject.state.UiStateDelegate
 import ua.dev.webnauts.cleanproject.state.UiStateDelegateImpl
 import javax.inject.Inject
 
-data class UserProfiles(val test : String)
+
 @HiltViewModel
 class TabsTwoViewModel @Inject constructor(
     val userDatabaseManagement: UserDatabaseManagement
 ) : ViewModel(), UiStateDelegate<
         TabsTwoViewModel.UiState, TabsTwoViewModel.Event> by UiStateDelegateImpl(UiState()) {
-
-
-    var testUiState = mutableStateOf<NetworkResponse<UserProfiles>?>(null)
-        private set
-
 
     data class UiState(
         val isLoading: Boolean = false,
@@ -94,14 +86,6 @@ class TabsTwoViewModel @Inject constructor(
 
         }
             .invokeOnCompletion { asyncUpdateUiState(viewModelScope) { state -> state.copy(isLoading = false) } }
-    }
-
-    fun testUpdateUiState(position : Int = 0) {
-        if(position == 0){
-            testUiState.value = NetworkResponse.Success(UserProfiles("nik"))
-        }else{
-            testUiState.value = NetworkResponse.Error(data = null, message = "error")
-        }
     }
 
 }

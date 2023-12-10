@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Clean Project"
 include ':app'
-include ':profile'

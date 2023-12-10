@@ -203,12 +203,10 @@ dependencies {
     //implementation "androidx.media3:media3-ui:1.2.0-alpha01"
 
 
-    //sqldelight
-    implementation(libs.android.driver)
-    implementation(libs.coroutines.extensions.jvm)
+//sqldelight
+    implementation("app.cash.sqldelight:android-driver:2.0.0")
+    implementation("app.cash.sqldelight:coroutines-extensions-jvm:2.0.0")
 
-
-    implementation project(':profile')
 
 }
 
