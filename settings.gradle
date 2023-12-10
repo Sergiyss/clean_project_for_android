@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "Clean Project"
 include ':app'
 include ':profile'
+include ':ui_components'

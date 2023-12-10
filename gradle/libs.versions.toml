@@ -1,7 +1,7 @@
 [versions]
 ktx = "1.12.0"
 androidxCore = "1.12.0"
-androidxActivity = "1.9.0"
+androidxActivity = "1.8.1"
 androidxComposeBom = "2023.10.01"
 androidxComposeRuntimeTracing = "1.0.0-alpha03"
 androidDesugarJdkLibs = "2.0.4"
@@ -65,6 +65,7 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.10.0"
 org-jetbrains-kotlin-jvm = "1.9.20"
+lifecycle-runtime-ktx = "2.6.2"
 
 [libraries]
 
@@ -180,6 +181,9 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 
 
 [plugins]
