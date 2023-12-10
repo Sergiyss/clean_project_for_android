@@ -34,6 +34,8 @@ import javax.inject.Inject
  *  Для быстрого старта, где уже есть всё необходимое, чтобы начать программировать
  *  и накидывать дизайн, не отвлекаясь на подключение либ и настройки проекта, навигации
  * */
+
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
