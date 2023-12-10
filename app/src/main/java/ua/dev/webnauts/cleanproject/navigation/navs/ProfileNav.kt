@@ -8,6 +8,7 @@ import androidx.navigation.navigation
 import ua.dev.webnauts.cleanproject.navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.navigation.Graph
+import ua.dev.webnauts.cleanproject.screen.profile.ProfileScreen
 import ua.dev.webnauts.cleanproject.utils.createTransitionComposableArg
 
 fun NavController.navigateToProfile(navOptions: NavOptions? = null) {
@@ -21,7 +22,7 @@ fun NavGraphBuilder.profileNav(appState: AppState) {
         createTransitionComposableArg(
             route = NavRoutes.Profile.route,
         ){
-           // ProfileScreen()
+           ProfileScreen(appState = appState)
         }
     }
 }
