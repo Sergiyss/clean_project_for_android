@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Clean Project"
 include ':app'
+include ':app:core'
+include ':core'
+include ':core:profile'
