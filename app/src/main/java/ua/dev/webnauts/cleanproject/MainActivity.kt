@@ -29,6 +29,10 @@ import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransition
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
 import javax.inject.Inject
 
+/***
+You are in the 'detached HEAD' state, which means that you're not on any branch Checkout a branch to be able to update the project.
+ *
+ * */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
