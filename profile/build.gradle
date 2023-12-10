@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.com.android.application)
+    alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
 }
 
@@ -8,13 +8,15 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "ua.dev.webnauts.profile"
         minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
     buildTypes {
@@ -24,34 +26,38 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
     }
 }
 
 dependencies {
 
-    api project(':app')
-
     implementation libs.androidx.ktx
     implementation libs.appcompat
     implementation libs.material
+
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.espresso.core
     androidTestImplementation libs.androidx.compose.bom
 
-    implementation libs.androidx.compose.bom
-    implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.material:material'
-    implementation libs.android.driver
-    implementation libs.coroutines.extensions.jvm
-    implementation(libs.coil.compose)
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
+
+    implementation 'androidx.compose.material3:material3:1.1.2'
+
 
 }
