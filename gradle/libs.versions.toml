@@ -1,0 +1,189 @@
+[versions]
+ktx = "1.12.0"
+androidxCore = "1.12.0"
+androidxActivity = "1.9.0"
+androidxComposeBom = "2023.10.01"
+androidxComposeRuntimeTracing = "1.0.0-alpha03"
+androidDesugarJdkLibs = "2.0.4"
+kotlinxCoroutines = "1.7.3"
+
+
+lifecycleLivedata = "2.6.2"
+androidxNavigation = "2.7.5"
+androidxLifecycle = "2.6.2"
+googleAccompanist = "0.15.0"
+
+googleProtobuf = "3.23.0"
+androidxDatastore = "1.0.0"
+
+playServicesAuth = "20.5.0"
+playServicesAuthApiPhone = "18.0.1"
+
+accompanistPermissions = "0.28.0"
+
+jetpackComposeCountryCodePicker = "1.1.4"
+lottieCompose = "6.0.0"
+workRuntime = "2.8.1"
+
+logbackClassic = "1.4.0"
+ktorVersion = "2.3.2"
+ktorClientAndroid = "2.3.0"
+
+kotlinxDatetime = "0.4.0"
+coil = "2.3.0"
+kotlinxSerializationJson = "1.5.1"
+
+
+hiltAndroid = "2.46.1"
+hiltCompiler= "2.46.1"
+hiltNavigationCompose = "1.0.0"
+hiltWork = "1.0.0"
+androidxHiltCompiler = "1.0.0"
+
+libphonenumberKey = "8.13.11"
+
+accompanistPager = "0.28.0"
+accompanistPagerIndicators = "0.28.0"
+
+kotlinReflect = "1.8.21"
+timberVer = "5.0.1"
+
+coroutinesExtensionsJvm = "2.0.0"
+androidDriver = "2.0.0"
+
+datastore = "1.0.0"
+datastoreCore = "1.0.0"
+protobufJavalite = "3.23.0"
+
+pagingRuntimeKtx = "3.2.1"
+pagingCompose = "3.2.0-rc01"
+agp = "8.0.2"
+org-jetbrains-kotlin-android = "1.9.20"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+appcompat = "1.6.1"
+material = "1.10.0"
+org-jetbrains-kotlin-jvm = "1.9.20"
+
+[libraries]
+
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+
+androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+
+
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+#Lifecycle
+lifecycle-livedata-ktx = {group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedata"}
+lifecycle-viewmodel-ktx = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleLivedata"}
+lifecycle-service = {group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "lifecycleLivedata"}
+runtime-livedata = {group = "androidx.compose.runtime", name = "runtime-livedata"}
+
+#Navigation compose
+navigation-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation"}
+
+#Compose ViewModel
+lifecycle-viewmodel-compose = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle"}
+lifecycle-runtime-compose = {group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle"}
+
+#настройка системной шторки
+accompanist-systemuicontroller = {group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "googleAccompanist"}
+
+#proto datastore
+datastore = {group = "androidx.datastore", name = "datastore", version.ref = "datastore"}
+datastore-core = {group = "androidx.datastore", name = "datastore-core", version.ref = "datastoreCore"}
+protobuf-javalite = {group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobufJavalite"}
+
+#GMS
+play-services-auth = {group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth"}
+play-services-auth-api-phone = {group = "com.google.android.gms", name = "play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone"}
+
+#Разрешения приложения
+accompanist-permissions = {group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissions"}
+
+#Country code
+jetpack_compose_country_code_picker = {group = "com.github.togisoft", name = "jetpack_compose_country_code_picker", version.ref = "jetpackComposeCountryCodePicker"}
+
+#Lottie animation
+lottie-compose = {group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieCompose"}
+
+#Work Manager dependency
+work-runtime = {group = "androidx.work", name = "work-runtime", version.ref = "workRuntime"}
+
+#Ktor
+ktor-client-core = {group = "io.ktor", name = "ktor-client-core", version.ref = "ktorVersion"}
+ktor-client-android = {group = "io.ktor", name = "ktor-client-android", version.ref = "ktorClientAndroid"}
+client-serialization = {group = "io.ktor", name = "client-serialization", version.ref = "ktorVersion"}
+ktor-client-logging = {group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorVersion"}
+ktor-serialization-kotlinx-json = {group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorVersion"}
+ktor-client-content-negotiation = {group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorVersion"}
+ktor-client-auth = {group = "io.ktor", name = "ktor-client-auth", version.ref = "ktorVersion"}
+logback-classic = {group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackClassic"}
+
+#NEMS = {group = "GROUP", name = "NAME", version.ref = "VERSION"}
+
+#Coil
+coil-compose = {group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
+coil-video = {group = "io.coil-kt", name = "coil-video", version.ref = "coil"}
+
+
+
+
+#Hilt
+hilt-android = {group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid"}
+hilt-compiler-dagger = {group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltCompiler"}
+hilt-navigation-compose = {group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose"}
+hilt-work = {group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork"}
+hilt-compiler-hilt = {group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidxHiltCompiler"}
+
+libphonenumber = {group = "com.googlecode.libphonenumber", name = "libphonenumber", version.ref = "libphonenumberKey"}
+
+#Pager
+accompanist-pager = {group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistPager"}
+accompanist-pager-indicators = {group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanistPagerIndicators"}
+
+
+paging-runtime-ktx = {group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntimeKtx"}
+paging-compose = {group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose"}
+
+
+kotlin-reflect = {group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlinReflect"}
+timber = {group = "com.jakewharton.timber", name = "timber", version.ref = "timberVer"}
+
+
+#sqldelight
+android-driver = {group = "app.cash.sqldelight", name = "android-driver", version.ref = "coroutinesExtensionsJvm"}
+coroutines-extensions-jvm = {group = "app.cash.sqldelight", name = "coroutines-extensions-jvm", version.ref = "androidDriver"}
+
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+
+[plugins]
+com-android-application = { id = "com.android.application", version.ref = "agp" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+com-android-library = { id = "com.android.library", version.ref = "agp" }

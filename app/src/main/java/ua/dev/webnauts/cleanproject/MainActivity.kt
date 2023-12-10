@@ -28,10 +28,11 @@ import ua.dev.webnauts.cleanproject.ui.theme.CleanProjectTheme
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransitionHorizontally
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
 import javax.inject.Inject
-
 /***
-You are in the 'detached HEAD' state, which means that you're not on any branch Checkout a branch to be able to update the project.
+ *  Проект с одним модулем...
  *
+ *  Для быстрого старта, где уже есть всё необходимое, чтобы начать программировать
+ *  и накидывать дизайн, не отвлекаясь на подключение либ и настройки проекта, навигации
  * */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package ua.dev.webnauts.cleanproject.screen.profile
+package ua.dev.webnauts.profile
 
 import android.view.View
 import androidx.compose.runtime.State

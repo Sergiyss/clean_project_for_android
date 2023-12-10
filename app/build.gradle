@@ -204,8 +204,11 @@ dependencies {
 
 
     //sqldelight
-    implementation("app.cash.sqldelight:android-driver:2.0.0")
-    implementation("app.cash.sqldelight:coroutines-extensions-jvm:2.0.0")
+    implementation(libs.android.driver)
+    implementation(libs.coroutines.extensions.jvm)
+
+
+    implementation project(':profile')
 
 }
 
