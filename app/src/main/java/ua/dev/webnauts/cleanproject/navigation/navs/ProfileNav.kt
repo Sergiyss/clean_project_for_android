@@ -11,6 +11,9 @@ import ua.dev.webnauts.cleanproject.navigation.Graph
 import ua.dev.webnauts.cleanproject.screen.profile.ProfileScreen
 import ua.dev.webnauts.cleanproject.utils.createTransitionComposableArg
 
+/**
+ * Рефакторинг
+ * */
 fun NavController.navigateToProfile(navOptions: NavOptions? = null) {
     this.navigate(Graph.Profile.graph, navOptions)
 }

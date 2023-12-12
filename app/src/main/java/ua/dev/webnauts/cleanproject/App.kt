@@ -16,11 +16,9 @@ class App : Application() {
             return isMainActivityStarted
         }
 
-        var fcmToken : String? = null
+        var fcmToken: String? = null
 
     }
-
-
     override fun onCreate() {
         super.onCreate()
 
