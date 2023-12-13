@@ -22,7 +22,11 @@ import ua.dev.webnauts.cleanproject.state.UiStateDelegate
 import ua.dev.webnauts.cleanproject.state.UiStateDelegateImpl
 import javax.inject.Inject
 
-
+/**
+ * два варианта чистого подхода, но второй где дата не очень подходит
+ *
+ * UiState
+ * **/
 @HiltViewModel
 class TabsTwoViewModel @Inject constructor(
     val userDatabaseManagement: UserDatabaseManagement
@@ -84,8 +88,7 @@ class TabsTwoViewModel @Inject constructor(
                 }
             }
 
-        }
-            .invokeOnCompletion { asyncUpdateUiState(viewModelScope) { state -> state.copy(isLoading = false) } }
+        }.invokeOnCompletion { asyncUpdateUiState(viewModelScope) { state -> state.copy(isLoading = false) } }
     }
 
 }
