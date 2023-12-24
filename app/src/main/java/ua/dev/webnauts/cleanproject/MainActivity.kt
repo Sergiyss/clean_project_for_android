@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                         exit = exitTransitionHorizontally(3000, 1000)
                     ) {
 
-                        rootScreen(
+                        RootScreen(
                             loginViewModel = loginViewModel,
                             networkMonitor = networkMonitor,
                             startDestination = destination
@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
  * вынести из навигации вверх. Во многих моментах она будет только мешать.
  * */
 @Composable
-fun rootScreen(loginViewModel: LoginViewModel, networkMonitor: NetworkMonitor, startDestination : String){
+fun RootScreen(loginViewModel: LoginViewModel, networkMonitor: NetworkMonitor, startDestination : String){
     val appState  = rememberAppState(networkMonitor = networkMonitor,)
     var selectedItem by remember { mutableStateOf(0) }
 
