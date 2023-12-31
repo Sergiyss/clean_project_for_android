@@ -77,7 +77,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 /***
  * Стартовая точка для [rootNavigation]
  * Здесь будут всё основные экраны. Отделил по той причине, что хочу [WelcomeScreen]

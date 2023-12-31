@@ -1,12 +1,10 @@
 package ua.dev.webnauts.cleanproject.di
 
 import android.app.Application
-import android.content.Context
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ua.dev.webnauts.sqldelightsetup.db.Database
 import javax.inject.Singleton
