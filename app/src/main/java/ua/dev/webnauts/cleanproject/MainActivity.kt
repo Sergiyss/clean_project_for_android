@@ -17,9 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.conena.nanokt.android.util.logDebug
-import com.conena.nanokt.android.util.logError
-import com.conena.nanokt.android.util.logWarn
 import dagger.hilt.android.AndroidEntryPoint
 import ua.dev.webnauts.cleanproject.navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.navigation.Navigation
@@ -52,9 +49,7 @@ class MainActivity : ComponentActivity() {
         val loginViewModel: LoginViewModel by viewModels()
 
 
-        logDebug("I love NanoKt")
-        logWarn("I love NanoKt")
-        logError("I love NanoKt")
+
 
         setContent {
             var startScreen  by remember { mutableStateOf<String?>( null ) }
