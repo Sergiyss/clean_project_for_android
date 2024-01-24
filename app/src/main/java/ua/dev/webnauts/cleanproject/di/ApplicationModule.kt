@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
+import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,6 +38,7 @@ import ua.dev.webnauts.cleanproject.App
 import ua.dev.webnauts.cleanproject.SettingsProto
 import ua.dev.webnauts.cleanproject.network.ktor.ServiceApi
 import ua.dev.webnauts.cleanproject.network.ktor.ServiceApiImpl
+import ua.dev.webnauts.cleanproject.repository.DownloadRepository
 import java.nio.file.*
 
 
@@ -88,5 +90,20 @@ object ApplicationModule {
     ): App {
         return context as App
     }
+
+    @Provides
+    @Singleton
+    fun providerDownloadRepository(
+        context: Context,
+        workManager: WorkManager
+    ): DownloadRepository {
+        return DownloadRepository(context, workManager)
+    }
+
+    @Provides
+    @Singleton
+    fun providerWorkManage(
+        app: App
+    ) : WorkManager = app.workManager
 
 }

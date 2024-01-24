@@ -57,7 +57,7 @@ class TabsTwoViewModel @Inject constructor(
     // Здесь мы преобразуем Flow, чтобы выполнить подсчет символов на главном потоке
     val emailCharacterCountFlow: Flow<String> = userFlow
         .map { user ->
-            user?.user!!.email
+            user?.user?.email ?: "none find email"
         }
         .flowOn(Dispatchers.Main)
 

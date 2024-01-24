@@ -25,6 +25,8 @@ import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.state.collectUiState
 import ua.dev.webnauts.cleanproject.state.collectWithLifecycle
+import ua.dev.webnauts.cleanproject.test_project.TestProjectViewModel
+import ua.dev.webnauts.cleanproject.test_project.TestWorker
 import ua.dev.webnauts.cleanproject.ui.compose_ui.top_bars.DefaultTopBar
 import ua.dev.webnauts.cleanproject.ui.theme.spacing
 import ua.dev.webnauts.cleanproject.utils.navigateSingleTopTo
@@ -33,6 +35,7 @@ import ua.dev.webnauts.cleanproject.utils.navigateSingleTopTo
 fun TabsTwoScreen(
     appState: AppState,
     tabsTwoViewModel: TabsTwoViewModel = hiltViewModel(),
+    testProjectViewModel: TestProjectViewModel = hiltViewModel(),
     lifecycle: LifecycleOwner = LocalLifecycleOwner.current
 ) {
     var tst  by remember { mutableStateOf( "" ) }
@@ -66,42 +69,10 @@ fun TabsTwoScreen(
                 .padding(it)
                 .padding(horizontal = MaterialTheme.spacing.medium)
         ) {
-
-            // Здесь вы можете использовать emailCharacterCount в UI вашего Compose-экрана
-            // Например:
-            Text("Character count: $emailCharacterCount")
-            if(uiState.isLoading) {
-                CircularProgressIndicator(strokeWidth = 20.dp)
-            }
-            if(uiState.error) {
-                Text(
-                    modifier = Modifier.padding(top = 24.dp),
-                    text = uiState.errorMessage
-                )
-            }
-
-            TextField(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                value = uiState.login,
-                onValueChange = tabsTwoViewModel::onLoginChange,
-                enabled = uiState.isLoading.not(),
-            )
-
-            TextField(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                value = uiState.password,
-                onValueChange = tabsTwoViewModel::onPasswordChange,
-                enabled = uiState.isLoading.not(),
-            )
-            
-            Button(onClick = tabsTwoViewModel::onLoginClick,) {
-                Text("Login")            }
+            TestWorker(
+                onDownloadUrl = testProjectViewModel::onAddDownload,
+                onClear = { /*TODO*/ },
+                downloads = testProjectViewModel.downloads.collectAsState())
         }
     }
 }
