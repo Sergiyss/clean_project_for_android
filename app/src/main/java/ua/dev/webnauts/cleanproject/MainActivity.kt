@@ -71,50 +71,20 @@ class MainActivity : ComponentActivity() {
                     animationState.targetState = true
                 })
 
-                Column {
-                    Button(onClick = {
-
-                    }) {
-                        Text(text = "Reset")
-                    }
-                    var showDialog by remember {
-                        mutableStateOf(false)
-                    }
-
-                    CustomDialog(
-                        showDialog = showDialog,
-                        onDismissRequest = { showDialog = false }
+                startScreen?.let { destination->
+                    AnimatedVisibility(
+                        visibleState = animationState,
+                        enter = enterTransitionHorizontally(3000, 1000),
+                        exit = exitTransitionHorizontally(3000, 1000)
                     ) {
-                        ResetWarning(
-                            onDismissRequest = { showDialog = false }
+
+                        RootScreen(
+                            loginViewModel = loginViewModel,
+                            networkMonitor = networkMonitor,
+                            startDestination = destination
                         )
                     }
-
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Button(onClick = {
-                            showDialog = true
-                        }) {
-                            Text(text = "Reset")
-                        }
-                    }
                 }
-//                startScreen?.let { destination->
-//                    AnimatedVisibility(
-//                        visibleState = animationState,
-//                        enter = enterTransitionHorizontally(3000, 1000),
-//                        exit = exitTransitionHorizontally(3000, 1000)
-//                    ) {
-//
-//                        RootScreen(
-//                            loginViewModel = loginViewModel,
-//                            networkMonitor = networkMonitor,
-//                            startDestination = destination
-//                        )
-//                    }
-//                }
             }
         }
     }
