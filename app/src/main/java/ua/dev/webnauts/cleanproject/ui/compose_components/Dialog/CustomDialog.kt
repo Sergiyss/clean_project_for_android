@@ -54,7 +54,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 
-
+/**
+ * Реализация диалового окна
+ * https://www.sinasamaki.com/custom-dialog-animation-in-jetpack-compose/
+ * https://gist.github.com/sinasamaki/daa825d96235a18822177a2b1b323f49?ref=sinasamaki.com
+ * */
 @Composable
 fun CustomDialog(
     showDialog: Boolean,
