@@ -6,17 +6,25 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import ua.dev.webnauts.cleanproject.navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.navigation.Navigation
@@ -24,6 +32,8 @@ import ua.dev.webnauts.cleanproject.network.network_monitor.NetworkMonitor
 import ua.dev.webnauts.cleanproject.screen.home.components.navigationData
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 import ua.dev.webnauts.cleanproject.screen.welcome.Welcome
+import ua.dev.webnauts.cleanproject.ui.compose_components.Dialog.CustomDialog
+import ua.dev.webnauts.cleanproject.ui.compose_components.Dialog.ResetWarning
 import ua.dev.webnauts.cleanproject.ui.theme.CleanProjectTheme
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransitionHorizontally
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
@@ -61,20 +71,50 @@ class MainActivity : ComponentActivity() {
                     animationState.targetState = true
                 })
 
-                startScreen?.let { destination->
-                    AnimatedVisibility(
-                        visibleState = animationState,
-                        enter = enterTransitionHorizontally(3000, 1000),
-                        exit = exitTransitionHorizontally(3000, 1000)
-                    ) {
+                Column {
+                    Button(onClick = {
 
-                        RootScreen(
-                            loginViewModel = loginViewModel,
-                            networkMonitor = networkMonitor,
-                            startDestination = destination
+                    }) {
+                        Text(text = "Reset")
+                    }
+                    var showDialog by remember {
+                        mutableStateOf(false)
+                    }
+
+                    CustomDialog(
+                        showDialog = showDialog,
+                        onDismissRequest = { showDialog = false }
+                    ) {
+                        ResetWarning(
+                            onDismissRequest = { showDialog = false }
                         )
                     }
+
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Button(onClick = {
+                            showDialog = true
+                        }) {
+                            Text(text = "Reset")
+                        }
+                    }
                 }
+//                startScreen?.let { destination->
+//                    AnimatedVisibility(
+//                        visibleState = animationState,
+//                        enter = enterTransitionHorizontally(3000, 1000),
+//                        exit = exitTransitionHorizontally(3000, 1000)
+//                    ) {
+//
+//                        RootScreen(
+//                            loginViewModel = loginViewModel,
+//                            networkMonitor = networkMonitor,
+//                            startDestination = destination
+//                        )
+//                    }
+//                }
             }
         }
     }
