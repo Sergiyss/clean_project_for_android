@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.sp
 import ua.dev.webnauts.cleanproject.R
 import ua.dev.webnauts.cleanproject.ui.compose_components.TextField.TextFieldWithTitle
 
-@Preview
+
 @Composable
-fun SuccessScreen() {
+fun SuccessScreen(success:()->Unit,) {
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -131,13 +131,13 @@ fun SuccessScreen() {
 
 
         Button(
-            modifier = Modifier.fillMaxWidth(1f).padding(horizontal = 30.dp),
+            modifier = Modifier.fillMaxWidth(1f).padding(horizontal = 10.dp),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF250AB4),
                 disabledContainerColor = Color(0xFF250AB4).copy(alpha = .5f)
             ),
-            onClick = { }) {
+            onClick = success) {
 
             androidx.compose.material3.Text(
                 modifier = Modifier.padding(vertical = 16.dp),

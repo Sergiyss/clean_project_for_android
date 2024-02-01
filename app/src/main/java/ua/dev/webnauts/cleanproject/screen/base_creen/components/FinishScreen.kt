@@ -61,7 +61,8 @@ fun FinishScreen() {
 
             Column(
                 modifier = Modifier
-                    .border(2.dp, color = Color.White, shape = RoundedCornerShape(15.dp)),
+                    .border(2.dp, color = Color.White, shape = RoundedCornerShape(15.dp))
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(15.dp, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
             ) {
@@ -128,7 +129,7 @@ fun FinishScreen() {
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(15.dp, Alignment.Start),
-                verticalAlignment = Alignment.Top,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.box),
@@ -160,7 +161,7 @@ fun FinishScreen() {
                 ),
                 onClick = {}) {
                 Row(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {

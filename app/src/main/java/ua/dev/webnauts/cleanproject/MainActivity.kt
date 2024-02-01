@@ -3,43 +3,22 @@ package ua.dev.webnauts.cleanproject
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.conena.nanokt.android.util.logDebug
-import com.conena.nanokt.android.util.logError
-import com.conena.nanokt.android.util.logWarn
 import dagger.hilt.android.AndroidEntryPoint
-import ua.dev.webnauts.cleanproject.navigation.NavRoutes
+import ua.dev.webnauts.cleanproject.navigation.Graph
 import ua.dev.webnauts.cleanproject.navigation.Navigation
 import ua.dev.webnauts.cleanproject.network.network_monitor.NetworkMonitor
 import ua.dev.webnauts.cleanproject.screen.base_creen.components.BackgroundBox
-import ua.dev.webnauts.cleanproject.screen.base_creen.components.Questionnaire
-import ua.dev.webnauts.cleanproject.screen.base_creen.components.RequirementsAnalysis
-import ua.dev.webnauts.cleanproject.screen.base_creen.components.TitleQues
-import ua.dev.webnauts.cleanproject.screen.home.components.navigationData
-import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
-import ua.dev.webnauts.cleanproject.screen.welcome.Welcome
-import ua.dev.webnauts.cleanproject.test_project.BigFileList
 import ua.dev.webnauts.cleanproject.ui.theme.CleanProjectTheme
-import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransitionHorizontally
-import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
 import javax.inject.Inject
 /***
  *  Проект с одним модулем...
@@ -59,9 +38,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val loginViewModel: LoginViewModel by viewModels()
-
-
 
 
         setContent {
@@ -70,20 +46,7 @@ class MainActivity : ComponentActivity() {
 
             CleanProjectTheme {
                 BackgroundBox{
-                    Box(
-                        modifier = Modifier.align(Alignment.Center).padding(horizontal = 20.dp).fillMaxSize(1f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
-                            horizontalAlignment = Alignment.Start,
-                            ) {
-
-                            TitleQues()
-                            RequirementsAnalysis()
-                            Questionnaire()
-                        }
-                    }
+                    RootScreen(networkMonitor = networkMonitor, startDestination = Graph.Home.graph)
                 }
             }
         }
@@ -96,7 +59,7 @@ class MainActivity : ComponentActivity() {
  * вынести из навигации вверх. Во многих моментах она будет только мешать.
  * */
 @Composable
-fun RootScreen(loginViewModel: LoginViewModel, networkMonitor: NetworkMonitor, startDestination : String){
+fun RootScreen(networkMonitor: NetworkMonitor, startDestination : String){
     val appState  = rememberAppState(networkMonitor = networkMonitor,)
     var selectedItem by remember { mutableStateOf(0) }
 
@@ -107,33 +70,6 @@ fun RootScreen(loginViewModel: LoginViewModel, networkMonitor: NetworkMonitor, s
     val currentDestination =  appState.currentDestination
 
 
-    Scaffold(
-        bottomBar = {
-            if (currentDestination?.route != NavRoutes.Welcome.route &&
-                currentDestination?.route != NavRoutes.Login.route &&
-                currentDestination?.route != NavRoutes.RegisterScreen().route) {
-                NavigationBar {
-                    navigationData.forEachIndexed { index, item ->
-                        NavigationBarItem(
-                            icon = {
-                                androidx.compose.material3.Icon(
-                                    imageVector = item.icon,
-                                    contentDescription = item.title,
-                                )
-                            },
-                            label = { androidx.compose.material.Text(item.title) },
-                            selected = selectedItem == index,
-                            onClick = {
-                                selectedItem = index
-                                appState.navigateToTopLevelDestination(item.route)
-                            }
-                        )
-                    }
-                }
-            }
-        }
-    ) {
-        Column(Modifier.padding(it)) {
 
             /**
              * @param startDestination - start destination for navigation
@@ -142,10 +78,9 @@ fun RootScreen(loginViewModel: LoginViewModel, networkMonitor: NetworkMonitor, s
              * */
             Navigation(
                 appState = appState,
-                loginViewModel = loginViewModel,
                 startDestination = startDestination
             )
 
-        }
-    }
+
+
 }

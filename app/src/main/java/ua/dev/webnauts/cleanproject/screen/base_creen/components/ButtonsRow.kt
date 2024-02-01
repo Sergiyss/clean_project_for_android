@@ -13,6 +13,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -30,6 +34,9 @@ import ua.dev.webnauts.cleanproject.R
 @Preview
 @Composable
 fun ButtonsRow(up:()-> Unit = {}, down:()-> Unit = {}){
+    var upEnabled  by remember { mutableStateOf( true ) }
+    var downEnabled  by remember { mutableStateOf( true ) }
+
     Row(
         modifier = Modifier.fillMaxWidth(1f),
         horizontalArrangement = Arrangement.spacedBy(15.dp, Alignment.Start),
@@ -38,13 +45,18 @@ fun ButtonsRow(up:()-> Unit = {}, down:()-> Unit = {}){
         Button(
             modifier = Modifier.weight(1f),
             shape =  RoundedCornerShape(10.dp),
+            enabled = upEnabled,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF47A60C),
-                disabledContainerColor = Color(0xFF47A60C)
+                disabledContainerColor = Color(0xFF47A60C).copy(alpha = .6f)
             ),
-            onClick = up) {
+            onClick = {
+                upEnabled = upEnabled.not()
+                downEnabled = downEnabled.not()
+                up()
+            }) {
             Row(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -58,7 +70,7 @@ fun ButtonsRow(up:()-> Unit = {}, down:()-> Unit = {}){
                 Icon(
                     modifier = Modifier.size(16.dp),
                     painter = painterResource(id = R.drawable.up),
-                    contentDescription = "Up", tint = Color.White
+                    contentDescription = "Up", tint = if(upEnabled) Color.White else Color.White.copy(.6f)
                 )
             }
         }
@@ -66,13 +78,18 @@ fun ButtonsRow(up:()-> Unit = {}, down:()-> Unit = {}){
         Button(
             modifier = Modifier.weight(1f),
             shape =  RoundedCornerShape(10.dp),
+            enabled= downEnabled,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFA6310C),
-                disabledContainerColor = Color(0xFFA6310C)
+                disabledContainerColor = Color(0xFFA6310C).copy(alpha = .6f)
             ),
-            onClick = down) {
+            onClick = {
+                upEnabled = upEnabled.not()
+                downEnabled = downEnabled.not()
+                down()
+            }) {
             Row(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -86,7 +103,7 @@ fun ButtonsRow(up:()-> Unit = {}, down:()-> Unit = {}){
                 Icon(
                     modifier = Modifier.rotate(180f).size(16.dp),
                     painter = painterResource(id = R.drawable.up),
-                    contentDescription = "Up", tint = Color.White
+                    contentDescription = "Up", tint = if(downEnabled) Color.White else Color.White.copy(.6f)
                 )
             }
         }

@@ -25,8 +25,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import ua.dev.webnauts.cleanproject.navigation.navs.navigateToHome
-import ua.dev.webnauts.cleanproject.navigation.navs.navigateToProfile
-import ua.dev.webnauts.cleanproject.navigation.navs.navigateToTab
 import ua.dev.webnauts.cleanproject.navigation.Graph
 import ua.dev.webnauts.cleanproject.navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.network.network_monitor.NetworkMonitor
@@ -89,8 +87,6 @@ data class AppState(
 
             when (graph) {
                 Graph.Home -> navController.navigateToHome(topLevelNavOptions)
-                Graph.TabTwo -> navController.navigateToTab(topLevelNavOptions)
-                Graph.Profile -> navController.navigateToProfile(topLevelNavOptions)
                 else ->  navController.navigateToHome(topLevelNavOptions)
             }
         }

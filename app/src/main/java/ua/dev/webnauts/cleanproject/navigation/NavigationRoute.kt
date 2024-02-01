@@ -12,16 +12,11 @@ import androidx.navigation.compose.NavHost
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.R
 import ua.dev.webnauts.cleanproject.navigation.navs.homeNav
-import ua.dev.webnauts.cleanproject.navigation.navs.loginNav
-import ua.dev.webnauts.cleanproject.navigation.navs.profileNav
-import ua.dev.webnauts.cleanproject.navigation.navs.tabNav
-import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 
 
 @Composable
 fun Navigation(
     appState: AppState,
-    loginViewModel: LoginViewModel,
     startDestination: String
 ) {
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
@@ -45,18 +40,10 @@ fun Navigation(
         startDestination = startDestination
     ) {
 
-        loginNav(
-            appState = appState,
-            loginViewModel = loginViewModel
-        )
         homeNav(
             appState = appState,
         )
-        profileNav(
-            appState = appState,
-        )
 
-        tabNav(appState = appState)
     }
 
 }

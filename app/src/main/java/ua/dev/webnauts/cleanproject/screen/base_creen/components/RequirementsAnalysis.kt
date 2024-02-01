@@ -44,7 +44,9 @@ import kotlin.random.Random
 
 @Preview
 @Composable
-fun RequirementsAnalysis(){
+fun RequirementsAnalysis(showAnalytics: Boolean = false) {
+
+
     Box(
         modifier = Modifier,
         contentAlignment = Alignment.Center
@@ -54,21 +56,20 @@ fun RequirementsAnalysis(){
             modifier = Modifier
                 .border(2.dp, color = Color.White, shape = RoundedCornerShape(18.dp))
                 .fillMaxWidth(1f)
-                .height(250.dp)
+                .height(280.dp)
                 .clip(RoundedCornerShape(15.dp)),
             contentAlignment = Alignment.Center
         ) {
-            Grid(R.drawable.point)
+            Grid(R.drawable.point, showAnalytics = showAnalytics)
         }
     }
 }
 
 
+data class Point(val x: Float, val y: Float, val point: Boolean? = null, val icon: Int? = null)
 
-
-data class Point(val x: Float, val y: Float, val point : Boolean? = null, val icon : Int? = null)
 @Composable
-fun Grid(imageResId: Int) {
+fun Grid(imageResId: Int, showAnalytics: Boolean) {
     val values = listOf(
         Point(0f, 12f),
         Point(3f, 10f),
@@ -109,9 +110,11 @@ fun Grid(imageResId: Int) {
 //    }
 
     val middleIndex = values.size / 2
-    val highestValueInMiddle = values.subList(middleIndex, middleIndex + 1).maxByOrNull { it.y }?.y ?: 0f
+    val highestValueInMiddle =
+        values.subList(middleIndex, middleIndex + 1).maxByOrNull { it.y }?.y ?: 0f
 
-    val highestValueInMiddleX = values.subList(middleIndex, middleIndex + 1).maxByOrNull { it.x }?.x ?: 0f
+    val highestValueInMiddleX =
+        values.subList(middleIndex, middleIndex + 1).maxByOrNull { it.x }?.x ?: 0f
 
 
 
@@ -119,24 +122,25 @@ fun Grid(imageResId: Int) {
 
 
     // find max and min value of X, we will need that later
-    val minXValue =  0f
-    val maxXValue =  14f
+    val minXValue = 0f
+    val maxXValue = 14f
 
     // find max and min value of Y, we will need that later
     val minYValue = 0f
-    val maxYValue =  14f
+    val maxYValue = 14f
 
     // Animatable to control the progress of the animation
     val progress = remember { Animatable(0f) }
 
-    LaunchedEffect(progress) {
+    LaunchedEffect(showAnalytics) {
+        if(!showAnalytics) return@LaunchedEffect
         progress.animateTo(1f, animationSpec = tween(1000)) // adjust the duration as needed
     }
 
     Box(
         modifier = Modifier
             .fillMaxWidth(1f)
-            .height(250.dp)
+            .height(280.dp)
             .drawBehind {
                 // draw grid
                 val rows = 14
@@ -148,7 +152,7 @@ fun Grid(imageResId: Int) {
                 // Draw horizontal lines
                 for (i in 1 until rows) {
                     drawLine(
-                        color = Color.White.copy(alpha = .9f),
+                        color = Color.White.copy(alpha = .6f),
                         strokeWidth = 2.dp.toPx(),
                         start = Offset(x = 0f, y = i * cellHeight),
                         end = Offset(x = size.width, y = i * cellHeight)
@@ -158,102 +162,102 @@ fun Grid(imageResId: Int) {
                 // Draw vertical lines
                 for (i in 1 until cols) {
                     drawLine(
-                        color = Color.White.copy(alpha = .9f),
+                        color = Color.White.copy(alpha = .6f),
                         strokeWidth = 2.dp.toPx(),
                         start = Offset(x = i * cellWidth, y = 0f),
                         end = Offset(x = i * cellWidth, y = size.height)
                     )
                 }
+                if (showAnalytics) {
+                    // Calculate the current progress based on the animation
+                    val currentProgress = progress.value
 
-                // Calculate the current progress based on the animation
-                val currentProgress = progress.value
+                    val pixelPoints = values.map {
+                        val x = it.x.mapValueToDifferentRange(
+                            inMin = minXValue,
+                            inMax = maxXValue,
+                            outMin = 0f,
+                            outMax = size.width
+                        ) * currentProgress
 
-                val pixelPoints = values.map {
-                    val x = it.x.mapValueToDifferentRange(
-                        inMin = minXValue,
-                        inMax = maxXValue,
-                        outMin = 0f,
-                        outMax = size.width
-                    ) * currentProgress
+                        val y = it.y.mapValueToDifferentRange(
+                            inMin = minYValue,
+                            inMax = maxYValue,
+                            outMin = size.height,
+                            outMax = 0f
+                        ) * currentProgress
 
-                    val y = it.y.mapValueToDifferentRange(
-                        inMin = minYValue,
-                        inMax = maxYValue,
-                        outMin = size.height,
-                        outMax = 0f
-                    ) * currentProgress
+                        Point(x, y)
+                    }
 
-                    Point(x, y)
-                }
-
-                val path = Path()
-                // Fill the path based on the current progress
-                pixelPoints
-                    .take((pixelPoints.size * currentProgress).toInt())
-                    .forEachIndexed { index, point ->
-                        if (index == 0) {
-                            path.moveTo(point.x, point.y)
-                        } else {
-                            path.lineTo(point.x, point.y)
+                    val path = Path()
+                    // Fill the path based on the current progress
+                    pixelPoints
+                        .take((pixelPoints.size * currentProgress).toInt())
+                        .forEachIndexed { index, point ->
+                            if (index == 0) {
+                                path.moveTo(point.x, point.y)
+                            } else {
+                                path.lineTo(point.x, point.y)
+                            }
                         }
+
+
+                    drawPath(
+                        path,
+                        color = Color(0xFFA6310C),
+                        style = Stroke(width = 16f)
+                    )
+
+
+                    // Draw circle at Point(5f, 10f)
+                    val circleX = highestValueInMiddleX.mapValueToDifferentRange(
+                        minXValue,
+                        maxXValue,
+                        0f,
+                        size.width
+                    ) * currentProgress
+                    val circleY = highestValueInMiddle.mapValueToDifferentRange(
+                        minYValue,
+                        maxYValue,
+                        size.height,
+                        0f
+                    ) * currentProgress
+
+                    // Check if the animation is complete before displaying the point and image
+                    if (currentProgress == 1f) {
+                        // Draw circle at the desired point
+
+                        drawCircle(
+                            color = Color.Green,
+                            center = Offset(circleX, circleY),
+                            radius = 8.dp.toPx()
+                        )
+
+
+                        drawCircle(
+                            color = Color.White,
+                            center = Offset(circleX, circleY),
+                            radius = 8.dp.toPx() + 2.dp.toPx(), // Adjust the border width as needed
+                            style = Stroke(width = 2.dp.toPx(), cap = StrokeCap.Round),
+                            alpha = 1f
+                        )
+
+                        drawImage(
+                            image = bitmap,
+                            alpha = 1f,
+                            topLeft = Offset(
+                                circleX - bitmap.width / 2f,
+                                (circleY - bitmap.height / 2f) - 100f
+                            )
+                        )
                     }
 
 
-
-
-                drawPath(
-                    path,
-                    color = Color(0xFFA6310C),
-                    style = Stroke(width = 12f)
-                )
-
-
-                // Draw circle at Point(5f, 10f)
-                val circleX = highestValueInMiddleX.mapValueToDifferentRange(
-                    minXValue,
-                    maxXValue,
-                    0f,
-                    size.width
-                ) * currentProgress
-                val circleY = highestValueInMiddle.mapValueToDifferentRange(
-                    minYValue,
-                    maxYValue,
-                    size.height,
-                    0f
-                ) * currentProgress
-
-                // Check if the animation is complete before displaying the point and image
-                if (currentProgress == 1f) {
-                    // Draw circle at the desired point
-
-                    drawCircle(
-                        color = Color.Green,
-                        center = Offset(circleX, circleY),
-                        radius = 8.dp.toPx()
-                    )
-
-
-                    drawCircle(
-                        color = Color.White,
-                        center = Offset(circleX, circleY),
-                        radius = 8.dp.toPx() + 2.dp.toPx(), // Adjust the border width as needed
-                        style = Stroke(width = 2.dp.toPx(), cap = StrokeCap.Round),
-                        alpha = 1f
-                    )
-
-                    drawImage(
-                        image = bitmap,
-                        alpha = 1f,
-                        topLeft = Offset(circleX - bitmap.width / 2f, (circleY - bitmap.height / 2f)-100f)
-                    )
                 }
-
-
-
             }
     )
 }
-
 
 
 fun Float.mapValueToDifferentRange(

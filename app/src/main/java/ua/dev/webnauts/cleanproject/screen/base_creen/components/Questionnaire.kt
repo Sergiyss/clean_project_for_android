@@ -52,7 +52,8 @@ fun TitleQues(title: String = "Сбербанк объявил о раздаче
 @Composable
 fun Questionnaire(
     title: String = "Вопрос 1/4",
-    subTitle: String = "Как себя поведут акции SBER (Сбербанк) после данной новости?"
+    subTitle: String = "Как себя поведут акции SBER (Сбербанк) после данной новости?",
+    up:()-> Unit = {}, down:()-> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -93,6 +94,6 @@ fun Questionnaire(
             )
         }
 
-        ButtonsRow(up = {}, down = {})
+        ButtonsRow(up =up, down = down)
     }
 }
