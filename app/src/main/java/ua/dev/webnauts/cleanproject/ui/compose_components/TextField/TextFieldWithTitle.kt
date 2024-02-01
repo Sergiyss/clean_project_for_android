@@ -17,7 +17,7 @@ import ua.dev.webnauts.cleanproject.ui.theme.spacing
 
 @Composable
 fun TextFieldWithTitle(
-    title: String,
+    title: String? = null,
     value: String,
     onValueChange: (String) -> Unit,
     error: Boolean = false,
@@ -32,10 +32,12 @@ fun TextFieldWithTitle(
         modifier = Modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.body1
-        )
+        title?.let{t->
+            Text(
+                text = t,
+                style = MaterialTheme.typography.body1
+            )
+        }
         AppTextField(
             value = value,
             onValueChange = onValueChange,

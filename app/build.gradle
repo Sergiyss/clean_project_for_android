@@ -195,7 +195,7 @@ dependencies {
 
     //Библиотека для кэширования всего всего
     //https://github.com/square/okio
-    //implementation("com.squareup.okio:okio:3.4.0")
+    implementation("com.squareup.okio:okio:3.7.0")
 
     //Предварительный просмотр ссылок
     //https://github.com/Priyansh-Kedia/OpenGraphParser

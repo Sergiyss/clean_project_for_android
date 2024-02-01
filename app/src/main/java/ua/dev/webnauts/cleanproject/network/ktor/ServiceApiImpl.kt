@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Environment
 import android.system.Os
 import android.system.Os.close
+import com.conena.nanokt.android.util.logDebug
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -20,6 +21,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import okio.*
+
+
 import java.io.File
 import java.nio.ByteBuffer
 import javax.inject.Inject
@@ -50,7 +55,7 @@ class ServiceApiImpl @Inject constructor(
 
             try {
                 val httpResponse: HttpResponse = client.get(link)
-                val channel: ByteReadChannel = httpResponse.body()
+                //val channel: ByteReadChannel = httpResponse.body()
 
 
                 val downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
@@ -58,21 +63,15 @@ class ServiceApiImpl @Inject constructor(
                     File(downloadsDirectory, "image_${System.currentTimeMillis()}.jpg")
                 }
 
-                val fileWriteChannel = file.writeChannel()
+                val responseBody: ResponseBody? = httpResponse.body()
 
                 try {
-                    val bufferSize = DEFAULT_BUFFER_SIZE
-                    val buffer = ByteBuffer.allocate(bufferSize)
-
-                    while (!channel.isClosedForRead) {
-                        buffer.clear()
-                        val bytesRead = channel.readAvailable(buffer)
-                        if (bytesRead > 0) {
-                            buffer.flip()
-                            fileWriteChannel.writeFully(buffer)
+                    file.sink().buffer().use { sink ->
+                        responseBody!!.source().use { source ->
+                            sink.writeAll(source)
                         }
                     }
-
+                    logDebug("Файл был загружен....")
                     trySend(NetworkResponse.Success(file.absolutePath))
                 } catch (e: Exception) {
                     trySend(

@@ -6,7 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -16,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.conena.nanokt.android.util.logDebug
 import com.conena.nanokt.android.util.logError
 import com.conena.nanokt.android.util.logWarn
@@ -24,9 +29,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import ua.dev.webnauts.cleanproject.navigation.NavRoutes
 import ua.dev.webnauts.cleanproject.navigation.Navigation
 import ua.dev.webnauts.cleanproject.network.network_monitor.NetworkMonitor
+import ua.dev.webnauts.cleanproject.screen.base_creen.components.BackgroundBox
+import ua.dev.webnauts.cleanproject.screen.base_creen.components.Questionnaire
+import ua.dev.webnauts.cleanproject.screen.base_creen.components.RequirementsAnalysis
+import ua.dev.webnauts.cleanproject.screen.base_creen.components.TitleQues
 import ua.dev.webnauts.cleanproject.screen.home.components.navigationData
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
 import ua.dev.webnauts.cleanproject.screen.welcome.Welcome
+import ua.dev.webnauts.cleanproject.test_project.BigFileList
 import ua.dev.webnauts.cleanproject.ui.theme.CleanProjectTheme
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransitionHorizontally
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
@@ -59,23 +69,20 @@ class MainActivity : ComponentActivity() {
             val animationState = remember { MutableTransitionState(false) }
 
             CleanProjectTheme {
-                Welcome(route = { startRoute->
-                    startScreen = startRoute
-                    animationState.targetState = true
-                })
-
-                startScreen?.let { destination->
-                    AnimatedVisibility(
-                        visibleState = animationState,
-                        enter = enterTransitionHorizontally(3000, 1000),
-                        exit = exitTransitionHorizontally(3000, 1000)
+                BackgroundBox{
+                    Box(
+                        modifier = Modifier.align(Alignment.Center).padding(horizontal = 20.dp).fillMaxSize(1f),
+                        contentAlignment = Alignment.Center
                     ) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+                            horizontalAlignment = Alignment.Start,
+                            ) {
 
-                        RootScreen(
-                            loginViewModel = loginViewModel,
-                            networkMonitor = networkMonitor,
-                            startDestination = destination
-                        )
+                            TitleQues()
+                            RequirementsAnalysis()
+                            Questionnaire()
+                        }
                     }
                 }
             }

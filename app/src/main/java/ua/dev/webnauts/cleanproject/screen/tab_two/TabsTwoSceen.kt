@@ -56,7 +56,6 @@ fun TabsTwoScreen(
         }
     }
 
-
     Scaffold(
         topBar = {
             DefaultTopBar(
