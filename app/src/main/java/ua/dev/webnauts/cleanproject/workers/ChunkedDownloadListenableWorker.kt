@@ -66,7 +66,8 @@ class ChunkedDownloadListenableWorker @AssistedInject constructor(
 
         Result.success(
             workDataOf(
-                RESULT_WORK_KEY to "Hello ${(0 .. 1000).random()}"
+                RESULT_WORK_KEY to "Hello ${(0 .. 1000).random()}",
+                DOWNLOAD_URL_KEY to "google.com.ua"
             )
         )
     }

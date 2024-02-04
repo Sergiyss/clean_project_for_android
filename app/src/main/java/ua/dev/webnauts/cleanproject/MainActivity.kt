@@ -1,8 +1,11 @@
 package ua.dev.webnauts.cleanproject
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
@@ -31,6 +34,13 @@ import ua.dev.webnauts.cleanproject.ui.theme.CleanProjectTheme
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransitionHorizontally
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
 import javax.inject.Inject
+import android.Manifest
+import androidx.compose.runtime.LaunchedEffect
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+
 /***
  *  Проект с одним модулем...
  *
@@ -46,6 +56,7 @@ class MainActivity : ComponentActivity() {
     lateinit var networkMonitor: NetworkMonitor
 
 
+    @OptIn(ExperimentalPermissionsApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,6 +66,8 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
+            val permissionState = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+
             var startScreen  by remember { mutableStateOf<String?>( null ) }
             val animationState = remember { MutableTransitionState(false) }
 
@@ -65,6 +78,15 @@ class MainActivity : ComponentActivity() {
                 })
 
                 startScreen?.let { destination->
+
+                    if (!permissionState.status.isGranted && permissionState.status.shouldShowRationale) {
+                        //Если наданы разрешения
+                    }else{
+
+                        LaunchedEffect(key1 = Unit, block = { permissionState.launchPermissionRequest() })
+                    }
+
+
                     AnimatedVisibility(
                         visibleState = animationState,
                         enter = enterTransitionHorizontally(3000, 1000),

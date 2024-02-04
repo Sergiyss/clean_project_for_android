@@ -14,6 +14,7 @@ import ua.dev.webnauts.cleanproject.workers.downloadWorkInfoListFlow
 import ua.dev.webnauts.cleanproject.workers.idAsString
 import ua.dev.webnauts.cleanproject.workers.outputFilename
 import ua.dev.webnauts.cleanproject.workers.result
+import ua.dev.webnauts.cleanproject.workers.result2
 import ua.dev.webnauts.cleanproject.workers.stateAsString
 import ua.dev.webnauts.cleanproject.workers.urlString
 import ua.dev.webnauts.cleanproject.workers.workDownloadData
@@ -45,7 +46,7 @@ class DownloadRepository(
                 infoList.map { info ->
                     Download(
                         id = info.idAsString(),
-                        urlString = info.urlString(),
+                        urlString = info.result2(),
                         outputFilename = info.outputFilename(),
                         progress = info.downloadProgress(),
                         downloadAttempt = info.downloadAttempt(),

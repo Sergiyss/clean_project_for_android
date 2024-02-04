@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import ua.dev.webnauts.cleanproject.repository.Download
 import ua.dev.webnauts.cleanproject.repository.DownloadRepository
 import ua.dev.webnauts.cleanproject.repository.Downloadable
@@ -23,8 +25,19 @@ class TestProjectViewModel @Inject constructor(
             .stateIn(scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
                 initialValue = emptyList())
-    }
 
+
+
+    }
+init {
+    viewModelScope.launch {
+        downloadRepository.observe().collect{t->
+            t.map {
+                println(">>>>>> dowm $it")
+            }
+        }
+    }
+}
     fun onAddDownload(downloadUrl: String) {
         downloadRepository.adds(
             t = Downloadable(

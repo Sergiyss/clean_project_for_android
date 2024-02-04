@@ -84,7 +84,7 @@ fun WorkInfo.urlString(): String = progress.getString(DOWNLOAD_URL_KEY) ?: ""
 fun WorkInfo.outputFilename(): String = progress.getString(FILENAME_KEY) ?: ""
 
 fun WorkInfo.result(): String = outputData.getString(RESULT_WORK_KEY) ?: ""
-
+fun WorkInfo.result2(): String = outputData.getString(DOWNLOAD_URL_KEY) ?: ""
 fun WorkInfo.downloadAttempt(): Int = runAttemptCount
 
 

@@ -19,11 +19,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import ua.dev.webnauts.cleanproject.AppState
 import ua.dev.webnauts.cleanproject.screen.login.LoginViewModel
+import ua.dev.webnauts.cleanproject.ui.compose_components.photo_text_field.Country
+import ua.dev.webnauts.cleanproject.ui.compose_components.photo_text_field.PhoneTextField
 
 @Composable
 fun HomeScreen(
@@ -31,6 +35,7 @@ fun HomeScreen(
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
     var animated by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     val rotation = remember { Animatable(initialValue = 0f) }
     val scale = remember { Animatable(initialValue = 1f) }
     var selectedItem by remember { mutableStateOf(0) }
@@ -39,6 +44,7 @@ fun HomeScreen(
     val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
+    var phoneNumber  by remember { mutableStateOf( TextFieldValue() ) }
 
     var test  by remember { mutableStateOf( "Home Screen" ) }
 
@@ -76,6 +82,21 @@ fun HomeScreen(
             }) {
                 Text("New Text")
             }
+            PhoneTextField(
+                value = phoneNumber,
+                context = context,
+                onValueChange = {
+                    phone, country ->
+                    phoneNumber = phone
+                },
+                onCountryChange = {
+                        phone, country ->
+                    phoneNumber = phone
+                },
+                countries = listOf(Country(99,
+                    "ru", "+380" ))
+            )
+
 
             LazyColumn(content = {
                 items(100) {
