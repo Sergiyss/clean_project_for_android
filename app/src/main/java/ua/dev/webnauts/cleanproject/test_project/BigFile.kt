@@ -1,5 +1,7 @@
 package ua.dev.webnauts.cleanproject.test_project
 
+import android.os.Environment
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,8 +38,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okio.Okio
+import okio.buffer
+import okio.sink
 import ua.dev.webnauts.cleanproject.network.ktor.NetworkResponse
 import ua.dev.webnauts.cleanproject.network.ktor.ServiceApi
+import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 data class DownloadImage(val itemId : Int, val imageLink : String)
@@ -69,7 +82,7 @@ class BigFileViewModel  @Inject constructor(
                 CoroutineScope(Dispatchers.Default).async {
                     serviceApi.downloadFileLink(operation.imageLink).collect{response->
                         if(response is NetworkResponse.Success){
-                            updateItem(DownloadImage(operation.itemId, response.data))
+                            updateItem(DownloadImage(operation.itemId, response.data)){}
                         }
                     }
                 }
@@ -77,12 +90,59 @@ class BigFileViewModel  @Inject constructor(
         }
     }
 
-    private fun updateItem(downloadImage: DownloadImage) {
-        loadedImagesList .value = loadedImagesList .value.orEmpty() + downloadImage
+    private fun updateItem(downloadImage: DownloadImage, result: (String)-> Unit) {
+        //loadedImagesList .value = loadedImagesList .value.orEmpty() + downloadImage
+//        CoroutineScope(Dispatchers.Default).launch {
+//            serviceApi.downloadFileLink(downloadImage.imageLink).collect{response->
+//                if(response is NetworkResponse.Success){
+//                    updateItem(DownloadImage(downloadImage.itemId, response.data))
+//                }
+//            }
+//        }
+
+        downloadImage(downloadImage.imageLink, result = result)
     }
     fun downloadPhoto(itemId : Int, url : String){
         viewModelScope.launch {
             channel.send(DownloadImage(itemId, url))
+        }
+    }
+
+
+
+
+    // Функция для загрузки изображения
+    fun downloadImage(imageLink: String, result: (String)-> Unit) {
+        CoroutineScope(Dispatchers.Default).launch {
+            val request = Request.Builder().url(imageLink).build()
+
+            OkHttpClient().newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    // Обработка ошибки
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+
+                    val file =
+                        File(downloadsDirectory, "image_${System.currentTimeMillis()}.jpg")
+
+
+                    if (file.exists()) {
+                        val fileDeleted = file.delete()
+                        Log.v("fileDeleted", fileDeleted.toString())
+                    }
+
+                    val fileCreated = file.createNewFile()
+
+                    val sink = file.sink().buffer()
+                    sink.writeAll(response.body!!.source())
+                    sink.close()
+
+                    result(file.path)
+                }
+            })
         }
     }
 }
@@ -105,7 +165,7 @@ fun FlowRowItem( bigFileViewModel : BigFileViewModel){
             .padding(8.dp),
         horizontalArrangement = Arrangement.Start
     ) {
-        for(item in 0..23){
+        for(item in 0..43){
             ItemPhoto((0..10000).random(), imageList.random(), bigFileViewModel)
         }
     }
@@ -117,16 +177,18 @@ fun ItemPhoto(itemId : Int, setLink : String, bigFileViewModel : BigFileViewMode
     val updateList by bigFileViewModel.loadedImagesList
 
     LaunchedEffect(key1 = Unit, block = {
-        bigFileViewModel.downloadPhoto(itemId, setLink)
-    })
-
-    LaunchedEffect(key1 = updateList, block = {
-        updateList?.forEach {item->
-            if(item.itemId == itemId){
-                link.value = item.imageLink
-            }
+        bigFileViewModel.downloadImage(setLink){
+            link.value = it
         }
     })
+
+//    LaunchedEffect(key1 = updateList, block = {
+//        updateList?.forEach {item->
+//            if(item.itemId == itemId){
+//                link.value = item.imageLink
+//            }
+//        }
+//    })
 
     link.value?.let {url->
         Image(
@@ -151,6 +213,9 @@ fun ItemPhoto(itemId : Int, setLink : String, bigFileViewModel : BigFileViewMode
         }
     }
 }
+
+
+
 
 
 val itemModifier2 = Modifier

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Clean Project</string>
     <string name="not_connected">⚠️ You aren’t connected to the internet</string>
+    <string name="default_web_client_id">464794290410-f8cgucb2a4cla2v38eos847of50m5kgb.apps.googleusercontent.com</string>
 </resources>

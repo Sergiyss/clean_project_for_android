@@ -9,6 +9,11 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import ua.dev.webnauts.cleanproject.AppState
 
 
@@ -63,4 +68,18 @@ fun NavGraphBuilder.createTransitionComposableArg(
     ) {
         content(it)
     }
+}
+
+object Coroutines {
+    fun io(work: suspend (() -> Unit)): Job =
+        CoroutineScope(Dispatchers.IO).launch {
+            work()
+        }
+    fun <T: Any> ioThenMain(work: suspend (() -> T?), callback: ((T?) -> Unit)): Job =
+        CoroutineScope(Dispatchers.Main).launch {
+            val data = CoroutineScope(Dispatchers.IO).async rt@{
+                return@rt work()
+            }.await()
+            callback(data)
+        }
 }

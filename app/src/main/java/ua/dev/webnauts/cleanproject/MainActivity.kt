@@ -1,11 +1,8 @@
 package ua.dev.webnauts.cleanproject
 
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
@@ -35,11 +32,28 @@ import ua.dev.webnauts.cleanproject.utils.animation.navanimation.enterTransition
 import ua.dev.webnauts.cleanproject.utils.animation.navanimation.exitTransitionHorizontally
 import javax.inject.Inject
 import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
+import ua.dev.webnauts.cleanproject.auth.google.authGoogleLauncher
 
 /***
  *  Проект с одним модулем...
@@ -61,7 +75,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val loginViewModel: LoginViewModel by viewModels()
-
+        val registrationViewModel: RegistrationViewModel by viewModels()
 
 
 
@@ -70,36 +84,83 @@ class MainActivity : ComponentActivity() {
 
             var startScreen  by remember { mutableStateOf<String?>( null ) }
             val animationState = remember { MutableTransitionState(false) }
+            val context = LocalContext.current
+
+            LaunchedEffect(Unit) {
+                registrationViewModel.logoutGoogle(context)
+            }
+
+
+            val authResultLauncher = authGoogleLauncher(registrationViewModel.googleSignInOptions) { task ->
+
+                println("registrationViewModel $task > ${registrationViewModel.googleSignInOptions}")
+
+                registrationViewModel.isResultGoogle(task,
+                    isRegisterGoogle = { isRegister, token, googleSignInAccount ->
+                        val name = googleSignInAccount.displayName?.split(" ")
+                        //Если ошибка регистрации, то переходим на экран регистрации
+                        println("registrationViewModel $name")
+                        println("registrationViewModel ${googleSignInAccount.email}")
+                    }, isLoginGoogle = {
+                        println("registrationViewModel login google ")
+                    }
+                )
+            }
+
 
             CleanProjectTheme {
-                Welcome(route = { startRoute->
-                    startScreen = startRoute
-                    animationState.targetState = true
-                })
-
-                startScreen?.let { destination->
-
-                    if (!permissionState.status.isGranted && permissionState.status.shouldShowRationale) {
-                        //Если наданы разрешения
-                    }else{
-
-                        LaunchedEffect(key1 = Unit, block = { permissionState.launchPermissionRequest() })
-                    }
+//                Welcome(route = { startRoute->
+//                    startScreen = startRoute
+//                    animationState.targetState = true
+//                })
 
 
-                    AnimatedVisibility(
-                        visibleState = animationState,
-                        enter = enterTransitionHorizontally(3000, 1000),
-                        exit = exitTransitionHorizontally(3000, 1000)
-                    ) {
+                Column {
+                    Button(
+                        onClick = {
+                            authResultLauncher.launch(333)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp),
+                        shape = RoundedCornerShape(6.dp),
+                        colors = ButtonDefaults.buttonColors(
 
-                        RootScreen(
-                            loginViewModel = loginViewModel,
-                            networkMonitor = networkMonitor,
-                            startDestination = destination
+                            contentColor = Color.White
                         )
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.google_icon),
+                            contentDescription = ""
+                        )
+                        Text(text = "Sign in with Google", modifier = Modifier.padding(6.dp))
                     }
+
                 }
+
+//                startScreen?.let { destination->
+//
+//                    if (!permissionState.status.isGranted && permissionState.status.shouldShowRationale) {
+//                        //Если наданы разрешения
+//                    }else{
+//
+//                        LaunchedEffect(key1 = Unit, block = { permissionState.launchPermissionRequest() })
+//                    }
+//
+//
+//                    AnimatedVisibility(
+//                        visibleState = animationState,
+//                        enter = enterTransitionHorizontally(3000, 1000),
+//                        exit = exitTransitionHorizontally(3000, 1000)
+//                    ) {
+//
+//                        RootScreen(
+//                            loginViewModel = loginViewModel,
+//                            networkMonitor = networkMonitor,
+//                            startDestination = destination
+//                        )
+//                    }
+//                }
             }
         }
     }
